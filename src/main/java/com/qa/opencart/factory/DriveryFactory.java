@@ -16,17 +16,22 @@ import com.qa.opencart.frameworkexceptions.FrameException;
 public class DriveryFactory {
 	
 	WebDriver driver;
+	optionManager options_manager;
+	
+	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
 	
 	public WebDriver initDriver(Properties prop) {
 		
 		String browserName = prop.getProperty("browser").trim();
 		System.out.println("Browser Name is====> " + browserName);
+		options_manager = new optionManager(prop);
 		switch (browserName.toLowerCase()) {
 		case "chrome":
-			driver = new ChromeDriver();
+			//driver = new ChromeDriver(options_manager.getChromeOptions());
+			tlDriver.set(new ChromeDriver(options_manager.getChromeOptions()));
 			break;
 		case "firefox":
-			driver = new FirefoxDriver();
+			driver = new FirefoxDriver(options_manager.getFirefoxOptions());
 			break;
 		case "edge":
 			driver = new EdgeDriver();
@@ -40,11 +45,16 @@ public class DriveryFactory {
 			throw new FrameException("NO_BROWSER_FOUND_EXCEPTION");
 		}
 		
-		driver.manage().deleteAllCookies();
-		driver.manage().window().maximize();
-		driver.get(prop.getProperty("url"));
-		return driver;
+		getDriver().manage().deleteAllCookies();
+		getDriver().manage().window().maximize();
+		getDriver().get(prop.getProperty("url"));
+		return getDriver();
 		
+	}
+	
+	//return the thread local copy of the driver
+	public synchronized static WebDriver getDriver() {
+		return tlDriver.get();
 	}
 	
 	public Properties initProp() {
