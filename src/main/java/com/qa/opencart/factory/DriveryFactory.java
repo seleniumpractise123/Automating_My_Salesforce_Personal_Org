@@ -25,7 +25,7 @@ public class DriveryFactory {
 		String browserName = prop.getProperty("browser").trim();
 		System.out.println("Browser Name is====> " + browserName);
 		options_manager = new optionManager(prop);
-		switch (browserName.toLowerCase()) {
+		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
 			//driver = new ChromeDriver(options_manager.getChromeOptions());
 			tlDriver.set(new ChromeDriver(options_manager.getChromeOptions()));
@@ -58,16 +58,57 @@ public class DriveryFactory {
 	}
 	
 	public Properties initProp() {
+		
+		//mvn clean install -Devn="which environment in need to execute"
+		//mvn clean install
+		
 		Properties prop = new Properties();
+		FileInputStream ip = null;
+		String envName = System.getProperty("env");
+		System.out.println("Running test cases on env: " + envName);
 		try {
-			FileInputStream ip = new FileInputStream("./src/main/resource/config/config.properties");
+		if(envName == null) {
+			System.out.println("no env is given... hence running it on QA env....");
 			try {
-				prop.load(ip);
-			} catch (IOException e) {
+				ip = new FileInputStream("./src/main/resource/config/qa.config.properties");
+			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+		}
+		else {
+			switch (envName.toLowerCase().trim()) {
+			case "qa":
+					ip = new FileInputStream("./src/main/resource/config/qa.config.properties");
+				
+				break;
+			case "dev":
+				ip = new FileInputStream("./src/main/resource/config/dev.config.properties");
+				break;
+			case "stage":
+				ip = new FileInputStream("./src/main/resource/config/stage.config.properties");
+				break;
+			case "uat":
+				ip = new FileInputStream("./src/main/resource/config/uat.config.properties");
+				break;
+			case "prod":
+				ip = new FileInputStream("./src/main/resource/config/config.properties");
+				break;
+
+			default:
+				System.out.println("plz pass the right environment ====> " + envName);
+				throw new FrameException("NO_VALID_ENV_GIVEN");
+			}
+		}
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			prop.load(ip);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
