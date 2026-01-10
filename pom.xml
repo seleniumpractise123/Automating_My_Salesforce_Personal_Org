@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>Jan2023_OpenCart_Practise</groupId>
-	<artifactId>Jan2023_OpenCart_Practise</artifactId>
+	<groupId>Automating_My_Salesforce_Personal_Org</groupId>
+	<artifactId>Automating_My_Salesforce_Personal_Org</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Jan2023_OpenCart_Practise</name>
+	<name>Automating_My_Salesforce_Personal_Org</name>
 	<url>http://maven.apache.org</url>
 
 
@@ -51,6 +51,12 @@
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>5.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.11.0</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 	<build>

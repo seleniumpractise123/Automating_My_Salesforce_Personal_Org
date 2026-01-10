@@ -2,31 +2,31 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Open Cart Regression" verbose="2" thread-count="2" parallel="tests">
 <listeners>
-   <listener class-name="com.qa.opencart.listeners.ExtentReportListener"/>
+   <listener class-name="com.qa.salesforce.listeners.ExtentReportListener"/>
 </listeners>
   <test  name="Login Page Test">
   
       <classes>
-         <class name="com.qa.opencart.tests.LoginPageTest"/>
+         <class name="com.qa.salesforce.tests.LoginPageTest"/>
       </classes>
   </test>
   
   <test  name="Account Page Test">
   
       <classes>
-         <class name="com.qa.opencart.tests.AccountsPageTest"/>
+         <class name="com.qa.salesforce.tests.AccountsPageTest"/>
       </classes>
   </test>
   
   <test  name="Search Test">
       <classes>
-         <class name="com.qa.opencart.tests.SearchTest"/>
+         <class name="com.qa.salesforce.tests.SearchTest"/>
       </classes>
   </test> 
   
   <test  name="Product Information page Test">
       <classes>
-         <class name="com.qa.opencart.tests.ProductPageInfoTest"/>
+         <class name="com.qa.salesforce.tests.ProductPageInfoTest"/>
       </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
