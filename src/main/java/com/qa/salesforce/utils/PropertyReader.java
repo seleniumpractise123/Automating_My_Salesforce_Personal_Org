@@ -24,32 +24,28 @@ public class PropertyReader {
 	private static Properties props = new Properties();
 	
 	public static void writingDataIntoTextFile(String arg,String name) {
-		try{
-			String finalOutPutData = arg+name;
-			BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH));
-			writer.write(finalOutPutData);
-			writer.close();
-			System.out.println("Data is stored in File successfully");
-		} catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+		Properties properties = new Properties();
+		try (FileInputStream fis = new FileInputStream(FILE_PATH)) {
+			properties.load(fis);
+		} catch (Exception ignored) {}
 
+		try (FileOutputStream fos = new FileOutputStream(FILE_PATH)) {
+			properties.setProperty(arg, name);
+			properties.store(fos, "Updated latest values");
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
     }
 
-	public static String readDataFromFile(){
-		String outputData = null;
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH));
-			String line;
-			System.out.println("Reading data from file:");
-			line = reader.readLine();
-			outputData = line;
-			reader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+	public static String readDataFromFile(String key){
+		Properties properties = new Properties();
+		try (FileInputStream fis = new FileInputStream(FILE_PATH)) {
+			properties.load(fis);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to read property file", e);
+		}
 
-		return outputData;
+		return properties.getProperty(key);
 	}
 
 		    

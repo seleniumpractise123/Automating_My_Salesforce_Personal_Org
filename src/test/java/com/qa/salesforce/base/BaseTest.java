@@ -23,6 +23,9 @@ public class BaseTest {
 	protected AccountHomePage accountHomePage;
 	protected Accounts accounts;
 	protected AccountDetailPage accountDetailPage;
+	protected ReportsHomePage reportsHomePage;
+	protected ReportBuilderPage reportBuilderPage;
+	protected ReportsDetailPage reportsDetailPage;
 	protected ExcelUtil excelUtil;
 	protected JavaScriptUtil javaScriptUtil;
 	protected ElementUtil elementUtil;
@@ -44,6 +47,9 @@ public class BaseTest {
 		accountHomePage = new AccountHomePage(driver);
 		accounts = new Accounts(driver);
 		accountDetailPage = new AccountDetailPage(driver);
+		reportsHomePage = new ReportsHomePage(driver);
+		reportBuilderPage = new ReportBuilderPage(driver);
+		reportsDetailPage = new ReportsDetailPage(driver);
 		softAssert = new SoftAssert();
 	}
 	

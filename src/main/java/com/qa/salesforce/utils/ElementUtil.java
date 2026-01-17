@@ -280,6 +280,11 @@ public class ElementUtil {
 		act.moveToElement(getElement(locator)).build().perform();
 	}
 
+	public void doMoveToElementClick(By locator) {
+		Actions act = new Actions(driver);
+		act.moveToElement(getElement(locator)).click().build().perform();
+	}
+
 	public void handleTwoLevelMenu(By parentMenu, By childMenu) throws InterruptedException {
 		doMoveToElement(parentMenu);
 		Thread.sleep(2000);

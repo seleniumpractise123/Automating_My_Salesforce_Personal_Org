@@ -42,8 +42,8 @@ public class LoginPage {
         try{
         loginToSalesforce(username,password);
         driver.navigate().refresh();
-            Thread.sleep(20000);
-        javaScriptUtil.waitForPageLoad(30);
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
         javaScriptUtil.clickElementByJS(appLanchLocator);
         //javaScriptUtil.waitForPageLoad(30);
             Thread.sleep(20000);
@@ -52,6 +52,7 @@ public class LoginPage {
         //eleUtil.doClick(salesLocatorClick);
             Thread.sleep(30000);
         javaScriptUtil.clickElementByJS(salesLocatorClick);
+        Thread.sleep(15000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
