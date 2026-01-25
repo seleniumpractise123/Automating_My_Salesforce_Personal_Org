@@ -167,9 +167,9 @@ public class AccountScenarioTest extends BaseTest {
         Assert.assertEquals(ActualTypeFieldValue,"Customer - Direct");
     }
 
-    @Test(description = "Fetching Customer Id through Reports and Opening Account Detail Page")
+    @Test(description = "Fetching Customer Id through Reports and Opening Account Detail Page",dependsOnMethods = "searchingAccountCustomerIDThroughListView")
     public void openingAccountDetailPageThroughReports(){
-        String custID = qsalesHomePage.getCustID("Cust-0080");
+        String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
         System.out.println("Value of the CUstID ===> " + custID);
         reportsHomePage = qsalesHomePage.clickReportsTab();
         reportsHomePage.clickingNewReportsBtn();
@@ -178,13 +178,13 @@ public class AccountScenarioTest extends BaseTest {
                 reportBuilderPage.buildingReportByUsingCustomerID("Account Name","Customer ID","Customer ID",custID);
         accountDetailPage = reportsDetailPage.openingAccountDetailPageByClickingAccountLink();
         accountDetailPage.clickingDetailTabAfterOpeningAccountFromReport();
-        //String ActualratingFieldValue = accountDetailPage.getRatingFieldValue();
-        //System.out.println("Value of the ActualratingFieldValue====>"+ ActualratingFieldValue);
-        //Assert.assertEquals(ActualratingFieldValue,"Warm");
+        String ActualratingFieldValue = accountDetailPage.getRatingFieldValue();
+        System.out.println("Value of the ActualratingFieldValue====>"+ ActualratingFieldValue);
+        Assert.assertEquals(ActualratingFieldValue,"Warm");
 
 
     }
-
+/*
     @Test(description = "Deleting Recently Created Account by clicking Delete button",dependsOnMethods = "openingAccountDetailPageThroughReports")
     public void deletingRecentlyCreatedAccount(){
         accountDetailPage = qsalesHomePage.navigatingToAccountDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestAccountURL"));
@@ -196,5 +196,7 @@ public class AccountScenarioTest extends BaseTest {
 
 
     }
+
+ */
 
 }

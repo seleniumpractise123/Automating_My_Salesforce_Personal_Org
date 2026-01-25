@@ -38,8 +38,8 @@ public class QSALESHomePage {
     private By accountHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
     private By enterSearchContext_Loc = By.xpath("//label[contains(text(),'Search...')]/parent::div[@part='input-text']//div[@part='input-container']");
     private By reportsTabLoc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Reports']");
-
-
+    private By clickingContactsTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Contacts']");
+    private By contactHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
 
 
     public AccountHomePage clickingAccountsTab(){
@@ -68,6 +68,17 @@ public class QSALESHomePage {
         driver.get(acurl);
         return new AccountDetailPage(driver);
 
+    }
+
+    public ContactDetailPage navigatingToContactDetailPageByUsingUrl(String conUrl){
+        System.out.println("Value of the URL====> " + conUrl);
+        // Find where "https" starts
+        int startIndex = conUrl.indexOf("https");
+        // Extract substring from that index
+        String acurl = conUrl.substring(startIndex);
+        System.out.println("Value of the acurl URL====> " + conUrl);
+        driver.get(acurl);
+        return new ContactDetailPage(driver);
     }
 
     public String setClickingGearIcon_Loc(String custID) {
@@ -143,6 +154,15 @@ public class QSALESHomePage {
 
     }
 
+    public String getContactID(String rawData){
+        System.out.println("Valur of the row Data===> " + rawData);
+        String cptureContactId = rawData.substring(0,6);
+        System.out.println("Valur of the cptureCustId===> " + cptureContactId);
+        return cptureContactId;
+
+
+    }
+
     public AccountDetailPage searchCustIDGlobally(String cutID){
         System.out.println("Value of the CUST ID====> " + cutID);
         try {
@@ -171,6 +191,34 @@ public class QSALESHomePage {
         return new AccountDetailPage(driver);
     }
 
+    public ContactDetailPage searchContactIDGlobally(String cutID){
+        System.out.println("Value of the CUST ID====> " + cutID);
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(20000);
+            javaScriptUtil.waitForPageLoad(40);
+            actions.moveToElement(driver.findElement(globalSearch_Loc)).click().build().perform();
+            //eleUtil.doSendKeys(enterSearchContext_Loc,cutID);
+            javaScriptUtil.waitForPageLoad(30);
+            javaScriptUtil.drawBorder(driver.findElement(enterSearchContext_Loc));
+            eleUtil.doActionsSendKeys(enterSearchContext_Loc,cutID);
+            Thread.sleep(15000);
+            WebElement searchOption = driver.findElement(By.xpath("//div[@role='option']//span[contains(@title,'Show more results for')]//span"));
+            javaScriptUtil.drawBorder(searchOption);
+            actions.moveToElement(searchOption).sendKeys(Keys.ENTER).perform();
+            //actions.moveToElement(driver.findElement(accountHeaderLink_Loc)).click().build().perform();
+            //eleUtil.doMoveToElement(accountHeaderLink_Loc);
+            //javaScriptUtil.waitForPageLoad(40);
+            Thread.sleep(15000);
+            javaScriptUtil.drawBorder(driver.findElement(contactHeaderLink_Loc));
+            javaScriptUtil.clickElementByJS(contactHeaderLink_Loc);
+            javaScriptUtil.waitForPageLoad(30);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return new ContactDetailPage(driver);
+    }
+
     public  ReportsHomePage clickReportsTab(){
         System.out.println("Compiler came to clickingReportsTab method");
         try {
@@ -184,6 +232,18 @@ public class QSALESHomePage {
         }
 
         return new ReportsHomePage(driver);
+    }
+
+    public ContactsHomePage setClickingContactsTab(){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.clickElementByJS(clickingContactsTab_Loc);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ContactsHomePage(driver);
     }
 
 

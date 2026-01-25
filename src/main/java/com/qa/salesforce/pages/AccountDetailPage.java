@@ -45,8 +45,10 @@ public class AccountDetailPage {
     private By upsellOpportunityFieldValue_Loc = By.xpath("//span[text()='Upsell Opportunity']//ancestor::div[@role='listitem']//slot[@name='outputField']/lightning-formatted-text[@slot='outputField']");
     private By activeFieldValue_Loc = By.xpath("//span[text()='Active']//ancestor::div[@role='listitem']//slot[@name='outputField']/lightning-formatted-text[@slot='outputField']");
     private By customerIdFieldValue_Loc = By.xpath("//span[text()='Customer ID']/ancestor::div[contains(@class,'slds-form-element_readonly')]//lightning-formatted-text[@slot='outputField']");
-    private By clickingDetailTabAfterReportLoc = By.id("detailTab__item");
+    private By clickingDetailTabAfterReportLoc = By.xpath("//a[text()='Details']");
     private By clickingConfirmingDeleteBtn_Loc = By.xpath("(//span[text()='Delete'])[position()=2]/parent::button[@title='Delete']");
+    private By clickingNewContactBtnFromAccount_Loc = By.xpath("//div[@class='slds-align_absolute-center']//button[@name='NewContact' and @type='button']");
+    private By clickingViewAllLinkFromAccountRelatedList_Loc = By.xpath("(//flexipage-component2[@data-component-id='force_relatedListContainer']//div[@class='listWrapper']//a)[8]");
 
     //Methods
     public void clickingDetailTab(){
@@ -66,6 +68,8 @@ public class AccountDetailPage {
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(250);
+            driver.navigate().refresh();
+            Thread.sleep(10000);
             javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabAfterReportLoc));
             javaScriptUtil.clickElementByJS(clickingDetailTabAfterReportLoc);
             javaScriptUtil.waitForPageLoad(200);
@@ -296,6 +300,39 @@ public class AccountDetailPage {
         driver.navigate().refresh();
         javaScriptUtil.waitForPageLoad(40);
         return new AccountHomePage(driver);
+
+    }
+
+    public Contacts clickNewContctBtnFromAccountRelatedList() {
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            eleUtil.doMoveToElementClick(clickingNewContactBtnFromAccount_Loc);
+            javaScriptUtil.waitForPageLoad(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+
+        }
+
+        return new Contacts(driver);
+    }
+
+    public ContactsHomePage clickingViewAllLinkFromAccountPage(){
+        try {
+            Thread.sleep(15000);
+            Thread.sleep(10000);
+            //By opportunitiesRelatedList_Loc = By.xpath("(//span[text()='Opportunities'])[2]");
+            //javaScriptUtil.drawBorder(driver.findElement(opportunitiesRelatedList_Loc));
+            //javaScriptUtil.scrollIntoView(driver.findElement(opportunitiesRelatedList_Loc));
+            javaScriptUtil.scrollPageDown("250");
+            javaScriptUtil.drawBorder(driver.findElement(clickingViewAllLinkFromAccountRelatedList_Loc));
+            eleUtil.doMoveToElementClick(clickingViewAllLinkFromAccountRelatedList_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ContactsHomePage(driver);
 
     }
 

@@ -1,32 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Open Cart Regression" verbose="2" thread-count="2" parallel="tests">
+<suite name="Open Cart Regression" verbose="2" thread-count="2">
 <listeners>
    <listener class-name="com.qa.salesforce.listeners.ExtentReportListener"/>
 </listeners>
   <test  name="Login Page Test">
   
       <classes>
-         <class name="com.qa.salesforce.tests.LoginPageTest"/>
+          <class name="com.qa.salesforce.tests.AccountScenarioTest"/>
+          <class name="com.qa.salesforce.tests.ContactsScenarioTest"/>
       </classes>
   </test>
-  
-  <test  name="Account Page Test">
-  
-      <classes>
-         <class name="com.qa.salesforce.tests.AccountsPageTest"/>
-      </classes>
-  </test>
-  
-  <test  name="Search Test">
-      <classes>
-         <class name="com.qa.salesforce.tests.SearchTest"/>
-      </classes>
-  </test> 
-  
-  <test  name="Product Information page Test">
-      <classes>
-         <class name="com.qa.salesforce.tests.ProductPageInfoTest"/>
-      </classes>
-  </test> <!-- Test -->
+
+<!-- Test -->
 </suite> <!-- Suite -->

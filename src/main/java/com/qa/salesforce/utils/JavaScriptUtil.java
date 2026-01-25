@@ -132,9 +132,9 @@ public class JavaScriptUtil {
 	}
 
 	public void selectingDrpDownValuesDynamically(By locator, String optionXpath){
-		waitForPageLoad(25);
+		waitForPageLoad(150);
 		js.executeScript("arguments[0].click()", driver.findElement(locator));
-		waitForPageLoad(25);
+		waitForPageLoad(150);
 		js.executeScript("arguments[0].click()",driver.findElement(By.xpath(optionXpath)));
 	}
 

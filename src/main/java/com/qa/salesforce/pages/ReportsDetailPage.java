@@ -36,4 +36,18 @@ public class ReportsDetailPage {
         return new AccountDetailPage(driver);
 
     }
+
+    public ContactDetailPage openingAccountDetailPageByClickingContactLink(){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.clickElementByJS(clickingAccountDetailPage);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ContactDetailPage(driver);
+
+    }
 }

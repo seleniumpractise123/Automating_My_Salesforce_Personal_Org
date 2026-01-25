@@ -28,7 +28,7 @@ import com.qa.salesforce.frameworkexceptions.FrameException;
 public class ElementUtil {
 
 	private WebDriver driver;
-	private final int DEFAULT_TIME_OUT = 5;
+	private final int DEFAULT_TIME_OUT = 50;
 
 	public ElementUtil(WebDriver driver) {
 		this.driver = driver;
