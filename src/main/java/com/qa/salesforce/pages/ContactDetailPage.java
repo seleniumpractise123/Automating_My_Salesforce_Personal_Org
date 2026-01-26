@@ -48,7 +48,8 @@ public class ContactDetailPage {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(200);
             javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabOnContact_Loc));
-            eleUtil.doMoveToElementClick(clickingDetailTabOnContact_Loc);
+            //eleUtil.doMoveToElementClick(clickingDetailTabOnContact_Loc);
+            javaScriptUtil.clickElementByJS(clickingDetailTabOnContact_Loc);
             javaScriptUtil.waitForPageLoad(200);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

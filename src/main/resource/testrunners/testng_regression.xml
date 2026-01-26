@@ -4,13 +4,17 @@
 <listeners>
    <listener class-name="com.qa.salesforce.listeners.ExtentReportListener"/>
 </listeners>
-  <test  name="Login Page Test">
-  
+  <test  name="Account Scenario's Test">
       <classes>
           <class name="com.qa.salesforce.tests.AccountScenarioTest"/>
-          <class name="com.qa.salesforce.tests.ContactsScenarioTest"/>
       </classes>
   </test>
+
+    <test  name="Contact Scenario Test">
+        <classes>
+            <class name="com.qa.salesforce.tests.ContactsScenarioTest"/>
+        </classes>
+    </test>
 
 <!-- Test -->
 </suite> <!-- Suite -->

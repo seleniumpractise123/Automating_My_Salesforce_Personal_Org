@@ -48,7 +48,7 @@ public class AccountDetailPage {
     private By clickingDetailTabAfterReportLoc = By.xpath("//a[text()='Details']");
     private By clickingConfirmingDeleteBtn_Loc = By.xpath("(//span[text()='Delete'])[position()=2]/parent::button[@title='Delete']");
     private By clickingNewContactBtnFromAccount_Loc = By.xpath("//div[@class='slds-align_absolute-center']//button[@name='NewContact' and @type='button']");
-    private By clickingViewAllLinkFromAccountRelatedList_Loc = By.xpath("(//flexipage-component2[@data-component-id='force_relatedListContainer']//div[@class='listWrapper']//a)[8]");
+    private By clickingContactHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Contacts']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
 
     //Methods
     public void clickingDetailTab(){
@@ -317,16 +317,11 @@ public class AccountDetailPage {
         return new Contacts(driver);
     }
 
-    public ContactsHomePage clickingViewAllLinkFromAccountPage(){
+    public ContactsHomePage clickingContactHeaderLinkFromAccountPage(){
         try {
             Thread.sleep(15000);
-            Thread.sleep(10000);
-            //By opportunitiesRelatedList_Loc = By.xpath("(//span[text()='Opportunities'])[2]");
-            //javaScriptUtil.drawBorder(driver.findElement(opportunitiesRelatedList_Loc));
-            //javaScriptUtil.scrollIntoView(driver.findElement(opportunitiesRelatedList_Loc));
-            javaScriptUtil.scrollPageDown("250");
-            javaScriptUtil.drawBorder(driver.findElement(clickingViewAllLinkFromAccountRelatedList_Loc));
-            eleUtil.doMoveToElementClick(clickingViewAllLinkFromAccountRelatedList_Loc);
+            javaScriptUtil.drawBorder(driver.findElement(clickingContactHeaderLinkFromAccountRelatedList_Loc));
+            eleUtil.doMoveToElementClick(clickingContactHeaderLinkFromAccountRelatedList_Loc);
             javaScriptUtil.waitForPageLoad(150);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

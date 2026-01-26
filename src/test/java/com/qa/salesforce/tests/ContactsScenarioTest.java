@@ -70,31 +70,27 @@ public class ContactsScenarioTest extends BaseTest {
         PropertyReader.writingDataIntoTextFile("LatestContactURL",contactDetailPage.getCurrentURL());
         PropertyReader.writingDataIntoTextFile("LatestContactID", contactDetailPage.getContactID());
     }
-
-    /*
-    @Test(description = "Creating Contact from Account Related List",dataProvider = "ContactCreationData")
+    @Test(description = "Creating Contact from Account Related List",dataProvider = "ContactCreationData",dependsOnMethods = "creatingNewContactByClickingNewBtnOnContactTab")
     public void creatingContactFromAccountRelatedList(String fName,String lName,String department,String phone,String description,String leadSource){
         accountDetailPage = qsalesHomePage.navigatingToAccountDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestAccountURL"));
         accountDetailPage.clickNewContctBtnFromAccountRelatedList();
         String ranfName = ElementUtil.generateRandomString(7)+fName;
         String ranlName = ElementUtil.generateRandomString(7)+lName;
         contactDetailPage = contacts.creatingContactThroughAccountRelatedList(ranfName,ranlName,department,phone,description,leadSource);
-        contactsHomePage = accountDetailPage.clickingViewAllLinkFromAccountPage();
+        contactsHomePage = accountDetailPage.clickingContactHeaderLinkFromAccountPage();
         contactDetailPage = contactsHomePage.clickingContactLinkFromContactHomePage();
-        contactDetailPage.clickDetailTabBtn();
+        contactDetailPage.clickDetailTabBtnThroughReports();
 
         String actualLeadSourceFieldValue = contactDetailPage.getLeadSourceFieldValue();
         System.out.println("Value of the actualLeadSourceFieldValue====>"+actualLeadSourceFieldValue);
-        //Assert.assertEquals(actualLeadSourceFieldValue, leadSource);
+        Assert.assertEquals(actualLeadSourceFieldValue, leadSource);
 
-        //String actualDepartmentFieldValue = contactDetailPage.getDepartmentFieldValue();
-        //Assert.assertEquals(actualDepartmentFieldValue, department);
+        String actualDepartmentFieldValue = contactDetailPage.getDepartmentFieldValue();
+        Assert.assertEquals(actualDepartmentFieldValue, department);
 
-        //PropertyReader.writingDataIntoTextFile("LatestContactURL",contactDetailPage.getCurrentURL());
-        //PropertyReader.writingDataIntoTextFile("LatestContactID", contactDetailPage.getContactID());
+        PropertyReader.writingDataIntoTextFile("LatestContactURL1",contactDetailPage.getCurrentURL());
+        PropertyReader.writingDataIntoTextFile("LatestContactID1", contactDetailPage.getContactID());
     }
-
-     */
 
     @Test(description = "searching contact id globally once record is find then open the record detail page",dependsOnMethods = "creatingNewContactByClickingNewBtnOnContactTab")
     public void searchingContactIDGloballyandOpeningContactDetailPage(){
