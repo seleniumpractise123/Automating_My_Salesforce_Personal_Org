@@ -40,8 +40,8 @@ public class QSALESHomePage {
     private By reportsTabLoc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Reports']");
     private By clickingContactsTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Contacts']");
     private By contactHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
-
-
+    private By clickingLeadsTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Leads']");
+    private By LeadHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
     public AccountHomePage clickingAccountsTab(){
         //eleUtil.doClick(AccountTabLoc, 10);
         System.out.println("Compiler came to clickingAccountsTab method");
@@ -219,6 +219,34 @@ public class QSALESHomePage {
         return new ContactDetailPage(driver);
     }
 
+    public LeadsDetailPage searchLeadIDGlobally(String LeadID){
+        System.out.println("Value of the Lead ID====> " + LeadID);
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(20000);
+            javaScriptUtil.waitForPageLoad(40);
+            actions.moveToElement(driver.findElement(globalSearch_Loc)).click().build().perform();
+            //eleUtil.doSendKeys(enterSearchContext_Loc,cutID);
+            javaScriptUtil.waitForPageLoad(30);
+            javaScriptUtil.drawBorder(driver.findElement(enterSearchContext_Loc));
+            eleUtil.doActionsSendKeys(enterSearchContext_Loc,LeadID);
+            Thread.sleep(15000);
+            WebElement searchOption = driver.findElement(By.xpath("//div[@role='option']//span[contains(@title,'Show more results for')]//span"));
+            javaScriptUtil.drawBorder(searchOption);
+            actions.moveToElement(searchOption).sendKeys(Keys.ENTER).perform();
+            //actions.moveToElement(driver.findElement(accountHeaderLink_Loc)).click().build().perform();
+            //eleUtil.doMoveToElement(accountHeaderLink_Loc);
+            //javaScriptUtil.waitForPageLoad(40);
+            Thread.sleep(15000);
+            javaScriptUtil.drawBorder(driver.findElement(LeadHeaderLink_Loc));
+            javaScriptUtil.clickElementByJS(LeadHeaderLink_Loc);
+            javaScriptUtil.waitForPageLoad(30);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return new LeadsDetailPage(driver);
+    }
+
     public  ReportsHomePage clickReportsTab(){
         System.out.println("Compiler came to clickingReportsTab method");
         try {
@@ -245,6 +273,33 @@ public class QSALESHomePage {
 
         return new ContactsHomePage(driver);
     }
+
+
+
+    public LeadsHomePage setClickingLeadsTab(){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.clickElementByJS(clickingLeadsTab_Loc);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new LeadsHomePage(driver);
+    }
+
+    public LeadsDetailPage navigatingToLeadDetailPageByUsingUrl(String leadUrl){
+        System.out.println("Value of the Lead URL====> " + leadUrl);
+        // Find where "https" starts
+        int startIndex = leadUrl.indexOf("https");
+        // Extract substring from that index
+        String leadURL = leadUrl.substring(startIndex);
+        System.out.println("Value of the Lead URL====> " + leadURL);
+        driver.get(leadURL);
+        return new LeadsDetailPage(driver);
+    }
+
+
 
 
 }

@@ -21,7 +21,9 @@ public class ReportsDetailPage {
         actions = new Actions(this.driver);
     }
 
-    private By clickingAccountDetailPage = By.xpath("//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='gridcell']//a");
+    private By clickingRecordDetailPage = By.xpath("//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='gridcell']//a");
+    private By clickingAccountDetailPage = By.xpath("(//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='gridcell'])[2]//div[contains(@aria-label,'Account Name:')]//a");
+
 
     public AccountDetailPage openingAccountDetailPageByClickingAccountLink(){
         try {
@@ -41,13 +43,27 @@ public class ReportsDetailPage {
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.clickElementByJS(clickingAccountDetailPage);
+            javaScriptUtil.clickElementByJS(clickingRecordDetailPage);
             javaScriptUtil.waitForPageLoad(150);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         return new ContactDetailPage(driver);
+
+    }
+
+    public LeadsDetailPage openingLeadDetailPageByClickingLeadLink(){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.clickElementByJS(clickingRecordDetailPage);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new LeadsDetailPage(driver);
 
     }
 }

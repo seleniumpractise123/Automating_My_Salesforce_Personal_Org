@@ -29,7 +29,7 @@ public class ReportBuilderPage {
     private By selectingShowMeFilter_Loc = By.xpath("((//div[@role='tabpanel'])[2]//li[@class='sectionable-table-row'])[1]//button[@type='button' and @aria-haspopup='dialog']");
     private By selectigCreatedDateFilter_Loc = By.xpath("((//div[@role='tabpanel'])[2]//li[@class='sectionable-table-row'])[2]//button[@type='button' and @aria-haspopup='dialog']");
     private By selectingEditFilter_Loc = By.xpath("//h2[text()='Edit Filter']//ancestor::span[@classname='design-system-react-portal']//button[@id='undefined-list']");
-    private By selectingRangeFilter_Loc = By.xpath("(//h2[text()='Filter by Created Date']//ancestor::span[@classname='design-system-react-portal']//button[@type='button'])[position()=3]");
+    private By selectingRangeFilter_Loc = By.xpath("//label[text()='Range']//ancestor::div[contains(@class,'custom-range-picklist')]//button[@type='button']");
     private By selectingApplyBtnOnEditFilter_Loc = By.xpath("//footer[contains(@class,'slds-text-align_right')]//button[text()='Apply']");
     private By clickingReportRunBtn_Loc = By.xpath("//div[@class='headerPanelItems']//div[@class='action-bars']//div[@class='actionBarButtonGroup']/button[text()='Run']");
     private By enteringNewFieldFilterCondtion_Loc = By.xpath("//label[text()='Add filter...']//ancestor::div[@class='sectionable-table-section']//div[@class='slds-combobox_container']//input[@placeholder='Add filter...' and @role='textbox']");
@@ -37,6 +37,7 @@ public class ReportBuilderPage {
     private By enteringColumnField_Loc = By.xpath("(//div[@class='sectionable-table-section'])[position()=2]//div[@role='none']/input[@placeholder='Add column...' and @role='textbox']");
     private By clickingSaveBtnOnAddColumnFilterCondition_Loc = By.xpath("(//footer[contains(@class,'filter-footer')]//div[contains(@class,'filter-button-group-margin')]/button)[last()]");
     private By clearColumnsFIlter_Loc = By.xpath("(//div[@class='sectionable-table-section'])[position()=2]//ul[@role='group']/li//span[@class='column-name']");
+    private By clickingConvertPicklistBn_Loc = By.xpath("//label[text()='Converted']/ancestor::div[@class='slds-popover__body']//button[@id='undefined-list']");
 
 
     public List<WebElement> getListOfColumnsFilter() {
@@ -55,7 +56,7 @@ public class ReportBuilderPage {
 
 
 
-    public void clearningColumnsValue(String columnFilter){
+    public void clearningColumnsValue(String ColumnFilterValue1,String ColumnFilterValue2,int bound){
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
@@ -64,16 +65,17 @@ public class ReportBuilderPage {
             String columnFilterText = null;
             if(columnsFilterCount > 0){
                 System.out.println("Driver Came to if part");
-                for (int i = 0; i < columnsFilterCount; i++) {
+                for(int i = 0; i < columnsFilterCount-bound; i++){
                     System.out.println("Driver Came to Loop");
                     List<WebElement> existingAllDealRegLeads = getListOfColumnsFilter();
-                    WebElement columnFilter1 = existingAllDealRegLeads.get(0);
+                    WebElement columnFilter1 = existingAllDealRegLeads.get(i);
                     System.out.println("Value of the columnFilter1===>"+columnFilter1);
                     columnFilterText = columnFilter1.getText().toString();
                     System.out.println("Value of the columnFilterText====>" + columnFilterText);
-                    if(columnFilterText.equals(columnFilter)){
+                    if(columnFilterText.equals(ColumnFilterValue1) || columnFilterText.equals(ColumnFilterValue2)){
                         System.out.println("No Need to remove the column");
                     }else{
+
                         javaScriptUtil.waitForPageLoad(150);
                         By clearColumnFilter = By.xpath("//h2[text()='Columns']/ancestor::div[@class='sectionable-table-section']//div[@class='sectionable-table-group-content']/ul[@role='group']//span[@aria-label='Remove Column: "+columnFilterText+"']");
                         javaScriptUtil.waitForPageLoad(150);
@@ -81,27 +83,41 @@ public class ReportBuilderPage {
                         javaScriptUtil.waitForPageLoad(40);
                     }
 
-
                 }
             }else{
                 System.out.println("record count size is ZERO");
             }
-
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void doEnterNewColumnField(String addColumn){
+    public void doEnterNewColumnFieldforLeadReport(String addColumn){
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
             javaScriptUtil.clickElementByJS(enteringColumnField_Loc);
             eleUtil.doSendKeys(enteringColumnField_Loc,addColumn);
             javaScriptUtil.waitForPageLoad(150);
-            By selectingFieldFilter = By.xpath("(//span[@title='Contact ID'])[2]");
+            By selectingFieldFilter = By.xpath("//span[@title='"+addColumn+"']");
             actions.moveToElement(driver.findElement(selectingFieldFilter)).click().build().perform();
+            javaScriptUtil.waitForPageLoad(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void doEnterConvertedNewColumnFieldforLeadReport(String addColumn){
+        try {
+            Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.clickElementByJS(enteringColumnField_Loc);
+            eleUtil.doSendKeys(enteringColumnField_Loc,addColumn);
+            javaScriptUtil.waitForPageLoad(150);
+            By selectingFieldFilter = By.xpath("//span[@title='"+addColumn+"']");
+            actions.moveToElement(driver.findElement(selectingFieldFilter)).click().build().perform();
+            javaScriptUtil.waitForPageLoad(200);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +131,7 @@ public class ReportBuilderPage {
             javaScriptUtil.clickElementByJS(enteringColumnField_Loc);
             eleUtil.doSendKeys(enteringColumnField_Loc,addColumn);
             javaScriptUtil.waitForPageLoad(150);
-            By selectingFieldFilter = By.xpath("//span[text()='Customer ID']");
+            By selectingFieldFilter = By.xpath("//span[text()='"+addColumn+"']");
             actions.moveToElement(driver.findElement(selectingFieldFilter)).click().build().perform();
             javaScriptUtil.waitForPageLoad(150);
         } catch (InterruptedException e) {
@@ -138,7 +154,7 @@ public class ReportBuilderPage {
         }
     }
 
-    public void setClickingShowMeFilterCondition(){
+    public void setClickingShowMeFilterCondition(String filterName){
         try {
             Thread.sleep(20000);
             //javaScriptUtil.waitForPageLoad(60);
@@ -147,7 +163,27 @@ public class ReportBuilderPage {
             javaScriptUtil.clickElementByJS(selectingShowMeFilter_Loc);
             javaScriptUtil.waitForPageLoad(200);
             javaScriptUtil.drawBorder(driver.findElement(selectingEditFilter_Loc));
-            javaScriptUtil.selectingDrpDownValuesDynamically(selectingEditFilter_Loc,"//span[text()='All accounts']/parent::a[@role='menuitem']");
+            javaScriptUtil.selectingDrpDownValuesDynamically(selectingEditFilter_Loc,"//span[text()='"+filterName+"']/parent::a[@role='menuitem']");
+            javaScriptUtil.waitForPageLoad(200);
+            javaScriptUtil.drawBorder(driver.findElement(selectingApplyBtnOnEditFilter_Loc));
+            actions.moveToElement(driver.findElement(selectingApplyBtnOnEditFilter_Loc)).click().build().perform();
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void setClickingShowMeFilterConditionForAccountReport(String filterName){
+        try {
+            Thread.sleep(20000);
+            //javaScriptUtil.waitForPageLoad(60);
+            //eleUtil.doMoveToElement(selectingShowMeFilter_Loc);
+            javaScriptUtil.drawBorder(driver.findElement(selectingShowMeFilter_Loc));
+            javaScriptUtil.clickElementByJS(selectingShowMeFilter_Loc);
+            javaScriptUtil.waitForPageLoad(200);
+            javaScriptUtil.drawBorder(driver.findElement(selectingEditFilter_Loc));
+            javaScriptUtil.selectingDrpDownValuesDynamically(selectingEditFilter_Loc,"//span[text()='"+filterName+"']/parent::a[@role='menuitem']");
             javaScriptUtil.waitForPageLoad(200);
             javaScriptUtil.drawBorder(driver.findElement(selectingApplyBtnOnEditFilter_Loc));
             actions.moveToElement(driver.findElement(selectingApplyBtnOnEditFilter_Loc)).click().build().perform();
@@ -165,7 +201,7 @@ public class ReportBuilderPage {
             //eleUtil.doMoveToElement(selectigCreatedDateFilter_Loc);
             javaScriptUtil.drawBorder(driver.findElement(selectigCreatedDateFilter_Loc));
             javaScriptUtil.clickElementByJS(selectigCreatedDateFilter_Loc);
-            javaScriptUtil.waitForPageLoad(60);
+            Thread.sleep(10000);
             javaScriptUtil.drawBorder(driver.findElement(selectingRangeFilter_Loc));
             javaScriptUtil.selectingDrpDownValuesDynamically(selectingRangeFilter_Loc,"//span[text()='All Time']/parent::a[@role='menuitem']");
             javaScriptUtil.waitForPageLoad(60);
@@ -199,18 +235,40 @@ public class ReportBuilderPage {
         }
 
     }
-    public void putContactIDFilterFieldValue(String FieldFilter,String filterValue){
+    public void putObjectFilterFieldValue(String FieldFilter,String filterValue){
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(60);
             javaScriptUtil.clickElementByJS(enteringNewFieldFilterCondtion_Loc);
             eleUtil.doSendKeys(enteringNewFieldFilterCondtion_Loc,FieldFilter);
             javaScriptUtil.waitForPageLoad(150);
-            By selectingFieldFilter = By.xpath("(//span[@title='Contact ID'])[2]");
+            By selectingFieldFilter = By.xpath("//span[@title='"+FieldFilter+"']");
             javaScriptUtil.waitForPageLoad(150);
             javaScriptUtil.clickElementByJS(selectingFieldFilter);
             javaScriptUtil.waitForPageLoad(200);
             eleUtil.doSendKeys(enteringNewFIeldFilterValue_Loc,filterValue);
+            javaScriptUtil.waitForPageLoad(200);
+            actions.moveToElement(driver.findElement(clickingSaveBtnOnAddColumnFilterCondition_Loc)).click().build().perform();
+            //javaScriptUtil.clickElementByJS(clickingSaveBtnOnAddColumnFilterCondition_Loc);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void putConvertedFilterFieldValue(String FieldFilter){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(60);
+            javaScriptUtil.clickElementByJS(enteringNewFieldFilterCondtion_Loc);
+            eleUtil.doSendKeys(enteringNewFieldFilterCondtion_Loc,FieldFilter);
+            javaScriptUtil.waitForPageLoad(150);
+            By selectingFieldFilter = By.xpath("(//span[@title='"+FieldFilter+"'])[last()]");
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.clickElementByJS(selectingFieldFilter);
+            javaScriptUtil.waitForPageLoad(200);
+            javaScriptUtil.selectingDrpDownValuesDynamically(clickingConvertPicklistBn_Loc, "//span[text()='False']/parent::a");
+            //eleUtil.doSendKeys(selectingConvertedFIeldFilterValue_Loc);
             javaScriptUtil.waitForPageLoad(200);
             actions.moveToElement(driver.findElement(clickingSaveBtnOnAddColumnFilterCondition_Loc)).click().build().perform();
             //javaScriptUtil.clickElementByJS(clickingSaveBtnOnAddColumnFilterCondition_Loc);
@@ -233,48 +291,71 @@ public class ReportBuilderPage {
         }
     }
 
-    public ReportsDetailPage buildingReportByUsingCustomerID(String ColumnFilterValue1,
-                                                             String addColumn,String FieldFilter,String filterValue){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(40);
-            javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
-            javaScriptUtil.waitForPageLoad(40);
-            clearningColumnsValue(ColumnFilterValue1);
-            doEnterNewCustomerIDColumnField(addColumn);
-            clickingFilterTabBtn();
-            javaScriptUtil.waitForPageLoad(60);
-            setClickingShowMeFilterCondition();
-            setClickingCreatedDateFilterCondition();
-            putCustomerIDFilterFieldValue(FieldFilter,filterValue);
-            doClickingReportRunBtn();
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-        return new ReportsDetailPage(driver);
+    public void buildingReportByUsingLeadID(String ColumnFilterValue1, String ColumnFilterValue2, int bound, String addColumn1, String addColumn2,
+                                            String FieldFilter, String filterValue, String FieldFilter1, String allFilter){
+
+
 
 
     }
 
-    public ReportsDetailPage buildingReportByUsingContactID(String ColumnFilterValue1,
-                                                             String addColumn,String FieldFilter,String filterValue){
+    public ReportsDetailPage buildingReportObjectID(String Object,String ColumnFilterValue1,String ColumnFilterValue2,int bound,String addColumn1,
+                                                            String addColumn2,String FieldFilter,String filterValue,String FieldFilter1,String allFilter){
+        String additionalColumn = addColumn2;
+        String additionalFilter = FieldFilter1;
+
         try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(40);
-            javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
-            javaScriptUtil.waitForPageLoad(40);
-            clearningColumnsValue(ColumnFilterValue1);
-            doEnterNewColumnField(addColumn);
-            clickingFilterTabBtn();
-            javaScriptUtil.waitForPageLoad(60);
-            setClickingShowMeFilterCondition();
-            setClickingCreatedDateFilterCondition();
-            putContactIDFilterFieldValue(FieldFilter,filterValue);
-            doClickingReportRunBtn();
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
+            if(Object.contains("Leads")){
+                javaScriptUtil.waitForPageLoad(40);
+                javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
+                javaScriptUtil.waitForPageLoad(40);
+                clearningColumnsValue(ColumnFilterValue1,ColumnFilterValue2,bound);
+
+                doEnterNewColumnFieldforLeadReport(addColumn1);
+                doEnterConvertedNewColumnFieldforLeadReport(addColumn2);
+                clickingFilterTabBtn();
+                javaScriptUtil.waitForPageLoad(60);
+                setClickingShowMeFilterCondition(allFilter);
+                setClickingCreatedDateFilterCondition();
+                putObjectFilterFieldValue(FieldFilter,filterValue);
+                putConvertedFilterFieldValue(FieldFilter1);
+                doClickingReportRunBtn();
+                javaScriptUtil.waitForPageLoad(150);
+
+            }else if (Object.contains("Accounts")){
+                System.out.println("Driver creating Report for remaining Object");
+                Thread.sleep(15000);
+                javaScriptUtil.waitForPageLoad(250);
+                javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
+                javaScriptUtil.waitForPageLoad(250);
+                clearningColumnsValue(ColumnFilterValue1,ColumnFilterValue2,bound);
+                doEnterNewCustomerIDColumnField(addColumn1);
+                clickingFilterTabBtn();
+                javaScriptUtil.waitForPageLoad(60);
+                setClickingShowMeFilterCondition(allFilter);
+                setClickingCreatedDateFilterCondition();
+                putObjectFilterFieldValue(FieldFilter,filterValue);
+                doClickingReportRunBtn();
+                javaScriptUtil.waitForPageLoad(150);
+            }else if (Object.contains("Contacts")){
+                System.out.println("Driver creating Report for remaining Object");
+                Thread.sleep(15000);
+                javaScriptUtil.waitForPageLoad(250);
+                javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
+                javaScriptUtil.waitForPageLoad(250);
+                clearningColumnsValue(ColumnFilterValue1,ColumnFilterValue2,bound);
+                doEnterNewCustomerIDColumnField(addColumn1);
+                clickingFilterTabBtn();
+                javaScriptUtil.waitForPageLoad(60);
+                setClickingShowMeFilterCondition(allFilter);
+                setClickingCreatedDateFilterCondition();
+                putObjectFilterFieldValue(FieldFilter,filterValue);
+                doClickingReportRunBtn();
+                javaScriptUtil.waitForPageLoad(150);
+            }
+
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

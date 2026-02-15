@@ -135,11 +135,14 @@ public class ContactsScenarioTest extends BaseTest {
     public void clickingContactDetailPageThroughReport(){
         String contactID = qsalesHomePage.getContactID(PropertyReader.readDataFromFile("LatestContactID"));
         System.out.println("Value of the contactID ===> " + contactID);
+        contactsHomePage = qsalesHomePage.setClickingContactsTab();
+        String Object_Header = contactsHomePage.getContactHeader();
+        System.out.println("Value of the Object_Header ===> " + Object_Header);
         reportsHomePage = qsalesHomePage.clickReportsTab();
         reportsHomePage.clickingNewReportsBtn();
         reportBuilderPage = reportsHomePage.selectingAllReportOption("Contacts & Accounts");
         reportsDetailPage =
-                reportBuilderPage.buildingReportByUsingContactID("Last Name","Contact ID","Contact ID",contactID);
+                reportBuilderPage.buildingReportObjectID(Object_Header,"Last Name","Account Name",8,"Custom_Contact ID","Lead Source","Custom_Contact ID",contactID,"Lead Source","All accounts");
         contactDetailPage = reportsDetailPage.openingAccountDetailPageByClickingContactLink();
         contactDetailPage.clickDetailTabBtnThroughReports();
 
@@ -148,15 +151,19 @@ public class ContactsScenarioTest extends BaseTest {
 
     }
 
+
+
     @Test(description = "Opening Contact Detail Page Through List views",dependsOnMethods = "clickingContactDetailPageThroughReport")
     public void openingContactDetailPageThroughListView(){
         String contactID = qsalesHomePage.getContactID(PropertyReader.readDataFromFile("LatestContactID"));
         System.out.println("Value of the contactID ===> " + contactID);
         contactsHomePage = qsalesHomePage.setClickingContactsTab();
-        contactsHomePage.searchingContactIDThroughListview("Contact ID",contactID);
+        contactsHomePage.clearFilterConditionIfPresent();
+        contactsHomePage.searchingContactIDThroughListview("Custom_Contact ID",contactID);
         contactDetailPage = contactsHomePage.clickingContactDetailPageThroughListView();
         contactDetailPage.clickDetailTabBtn();
         String actualLeadSourceFieldValue = contactDetailPage.getLeadSourceFieldValue();
+        System.out.println("Value of the actualLeadSourceFieldValue====>"+actualLeadSourceFieldValue);
         contactsHomePage = contactDetailPage.navigateBackToAccountsHome();
         contactsHomePage.clearningFilterConditionAfterCapturingTheData();
         Assert.assertEquals(actualLeadSourceFieldValue, "Phone Inquiry");
@@ -166,7 +173,7 @@ public class ContactsScenarioTest extends BaseTest {
 
     @Test(description = "Deleting Recently Created Contact",dependsOnMethods = "openingContactDetailPageThroughListView")
     public void deletingRecentlyCreatedContact(){
-        contactDetailPage = qsalesHomePage.navigatingToContactDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestContactURL"));
+        contactDetailPage = qsalesHomePage.navigatingToContactDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestContactURL1"));
         contactDetailPage.clickDetailTabBtn();
         contactDetailPage.clickDeleteBtnFromMoreBtn();
         contactsHomePage = contactDetailPage.setClickingConfirmingDeleteBtn();

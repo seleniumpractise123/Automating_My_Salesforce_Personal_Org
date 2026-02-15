@@ -31,69 +31,72 @@ public class ContactsHomePage {
     private By clickingFieldFilterBtn_loc = By.xpath("//label[text()='Field']/ancestor::div[@part='combobox']//div[@class='slds-combobox_container']//button[@name='Field' and @role='combobox']");
     private By valueField_Loc = By.xpath("//label[text()='Value']/ancestor::lightning-input[@data-id='OperandInput']//input[@part='input']");
     private By clickingSaveBtnOnFilterProvidedPage_Loc = By.xpath("//div[contains(@class,'slds-m-bottom_small')]//lightning-button[@data-id='SaveButton']/button[@type='button']");
-    private By getClickingSaveBtnOnFilterProvidedPage_Loc = By.xpath("//div[contains(@class,'slds-grid_align-end')]//lightning-button[@data-id='saveButton']/button[@type='button']");
+    private By clickingSaveBtnOnMainFIltetPage_Loc = By.xpath("//div[contains(@class,'slds-grid_align-end')]//lightning-button[@data-id='saveButton']/button[@type='button']");
     private By clearingFilterCondition_Loc = By.xpath("//a[text()='Remove All']");
-    private By checkingFilterCondition_Loc = By.xpath("(//div[contains(@class,'slds-grid_vertical')])[position()=2]//p");
+    private By checkingFilterCondition_Loc = By.xpath("(//div[contains(@class,'listDisplays')]//form[contains(@class,'slds-panel_docked-right')]//div//p)[position()=2]");
     private By contactHeader_Loc = By.xpath("//div[contains(@class,'slds-page-header--object-home')]//div[contains(@class,'slds-line-height_reset')]/h1");
 
-    public void clicikingFileterBtn(){
-        javaScriptUtil.waitForPageLoad(40);
+
+    public void clicikingFileterBtn() {
+        javaScriptUtil.waitForPageLoad(250);
+        javaScriptUtil.drawBorder(driver.findElement(clickingFilterBtn_Loc));
         eleUtil.doClick(clickingFilterBtn_Loc);
-        javaScriptUtil.waitForPageLoad(40);
+        javaScriptUtil.waitForPageLoad(250);
     }
 
-    public void setClickingAddFilterBtn(){
-        javaScriptUtil.waitForPageLoad(40);
-        eleUtil.doClick(clickingAddFilterBtn_Loc);
-        javaScriptUtil.waitForPageLoad(40);
+    public void setClickingAddFilterBtn() {
+        javaScriptUtil.waitForPageLoad(250);
+        //eleUtil.doClick(clickingAddFilterBtn_Loc);
+        //eleUtil.doMoveToElementClick(clickingAddFilterBtn_Loc);
+        javaScriptUtil.clickElementByJS(clickingAddFilterBtn_Loc);
+        javaScriptUtil.waitForPageLoad(250);
 
     }
 
-    public void selectingAllContactsListView(){
+    public void selectingAllContactsListView() {
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(200);
-            javaScriptUtil.selectingDrpDownValuesDynamically(clickingListViewBtn_Loc,"//span[text()='All Contacts']");
+            javaScriptUtil.selectingDrpDownValuesDynamically(clickingListViewBtn_Loc, "//span[text()='All Contacts']");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void passingFiltersDynamically(String fieldFilterValue,String valueFilterValue){
-        javaScriptUtil.selectingDrpDownValuesDynamically(clickingFieldFilterBtn_loc,"//span[text()='"+fieldFilterValue+"']");
-        eleUtil.doSendKeys(valueField_Loc,valueFilterValue);
-        eleUtil.doClick(clickingSaveBtnOnFilterProvidedPage_Loc);
-    }
+    public void passingFiltersDynamically(String fieldFilterValue, String valueFilterValue) {
 
-    public void clickingClearFilterCondition(){
-        javaScriptUtil.waitForPageLoad(40);
-        eleUtil.doClick(clearingFilterCondition_Loc);
-        eleUtil.doClick(getClickingSaveBtnOnFilterProvidedPage_Loc);
-
-    }
-
-
-    public void searchingContactIDThroughListview(String fieldFilterValue,String valueFilterValue){
         try {
             Thread.sleep(15000);
-            selectingAllContactsListView();
-            clicikingFileterBtn();
-            String filterCondition = eleUtil.doGetElementText(checkingFilterCondition_Loc);
-            if(filterCondition.contains("Matching all of these filters")){
-                Thread.sleep(10000);
-                clickingClearFilterCondition();
-                Thread.sleep(10000);
-                setClickingAddFilterBtn();
-                passingFiltersDynamically(fieldFilterValue,valueFilterValue);
-                eleUtil.doClick(getClickingSaveBtnOnFilterProvidedPage_Loc);
-                javaScriptUtil.waitForPageLoad(150);
-            }else{
-                setClickingAddFilterBtn();
-                passingFiltersDynamically(fieldFilterValue,valueFilterValue);
-                eleUtil.doClick(getClickingSaveBtnOnFilterProvidedPage_Loc);
-                javaScriptUtil.waitForPageLoad(150);
-            }
+            javaScriptUtil.selectingDrpDownValuesDynamically(clickingFieldFilterBtn_loc, "//span[text()='" + fieldFilterValue + "']");
+            eleUtil.doSendKeys(valueField_Loc, valueFilterValue);
+            Thread.sleep(10000);
+            javaScriptUtil.drawBorder(driver.findElement(clickingSaveBtnOnFilterProvidedPage_Loc));
+            eleUtil.doMoveToElementClick(clickingSaveBtnOnFilterProvidedPage_Loc);
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
+
+    public void clickingClearFilterCondition() {
+        javaScriptUtil.waitForPageLoad(40);
+        eleUtil.doClick(clearingFilterCondition_Loc);
+        eleUtil.doClick(clickingSaveBtnOnMainFIltetPage_Loc);
+
+    }
+
+
+    public void searchingContactIDThroughListview(String fieldFilterValue, String valueFilterValue) {
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            //selectingAllContactsListView();
+            //clicikingFileterBtn();
+            setClickingAddFilterBtn();
+            passingFiltersDynamically(fieldFilterValue,valueFilterValue);
+            javaScriptUtil.waitForPageLoad(250);
+            eleUtil.doClick(clickingSaveBtnOnMainFIltetPage_Loc);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -113,7 +116,7 @@ public class ContactsHomePage {
         return new Contacts(driver);
     }
 
-    public ContactDetailPage clickingContactLinkFromContactHomePage(){
+    public ContactDetailPage clickingContactLinkFromContactHomePage() {
         try {
             Thread.sleep(15000);
             //javaScriptUtil.waitForPageLoad(200);
@@ -129,7 +132,7 @@ public class ContactsHomePage {
 
     }
 
-    public ContactDetailPage clickingContactDetailPageThroughListView(){
+    public ContactDetailPage clickingContactDetailPageThroughListView() {
         By contactLink = By.xpath("//div[contains(@class,'slds-table_header-fixed_container')]//table[contains(@class,slds-table_header-fixed)]//tbody//th[@data-label='Name']//div[@class='slds-grid']/a");
         try {
             Thread.sleep(15000);
@@ -145,7 +148,7 @@ public class ContactsHomePage {
 
     }
 
-    public String getContactHeader(){
+    public String getContactHeader() {
         String objectHeader = null;
         try {
             Thread.sleep(15000);
@@ -161,21 +164,45 @@ public class ContactsHomePage {
 
     }
 
-    public void clearningFilterConditionAfterCapturingTheData(){
-        javaScriptUtil.waitForPageLoad(40);
-        driver.navigate().back();
-        javaScriptUtil.waitForPageLoad(40);
+    public void clearningFilterConditionAfterCapturingTheData() {
         try {
             Thread.sleep(10000);
-            selectingAllContactsListView();
+            //selectingAllContactsListView();
             Thread.sleep(10000);
             clicikingFileterBtn();
             Thread.sleep(10000);
             clickingClearFilterCondition();
-            Thread.sleep(10000);
+            Thread.sleep(5000);
+            //javaScriptUtil.drawBorder(driver.findElement(clickingSaveBtnOnMainFIltetPage_Loc));
+            //eleUtil.doMoveToElementClick(clickingSaveBtnOnMainFIltetPage_Loc);
+            //javaScriptUtil.waitForPageLoad(250);
+            driver.navigate().refresh();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void clearFilterConditionIfPresent() {
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(15000);
+            selectingAllContactsListView();
+            Thread.sleep(10000);
+            clicikingFileterBtn();
+            Thread.sleep(10000);
+            String filterCondition = eleUtil.doGetElementText(checkingFilterCondition_Loc);
+            System.out.println("Values of the filterCondition====>"+filterCondition);
+            if(filterCondition.contains("Matching all of these filters")){
+                Thread.sleep(10000);
+                clickingClearFilterCondition();
+                javaScriptUtil.waitForPageLoad(150);
+            }else{
+                System.out.println("No Filter Conditions are Available");
+            }
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

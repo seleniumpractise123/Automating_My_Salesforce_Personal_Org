@@ -27,12 +27,13 @@ public class LoginPage {
     private By salesLocatorClick = By.xpath("//one-app-launcher-menu-item[@class='slds-dropdown__item']/a[@data-label='Sales']");
 
     public  void loginToSalesforce(String username,String password){
-        eleUtil.waitForElementVisible(UserNameLoc,15);
+
         eleUtil.doSendKeys(UserNameLoc,username);
         eleUtil.doSendKeys(PasswordLoc,password);
-        eleUtil.doClick(LoginBtnLoc, 10);
+        eleUtil.doClick(LoginBtnLoc,30);
         try {
-            Thread.sleep(15000);
+            Thread.sleep(25000);
+
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

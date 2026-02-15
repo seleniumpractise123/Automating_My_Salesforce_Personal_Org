@@ -116,24 +116,7 @@ public class AccountScenarioTest extends BaseTest {
         String ActualActiveFieldValue = accountDetailPage.getActiveFieldValue();
         Assert.assertEquals(ActualActiveFieldValue,"No");
     }
-/*
-    @Test(description = "Fetching Account SFDC ID though SOQL," +
-            "Pasting that ID in URL and Navigating to Account Detail Page")
-    public void navigatingAccountDetailPageThroughSFDCID(){
-        String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile());
-        System.out.println("Value of the CUstID ===> " + custID);
-        String AccountSFDCID = qsalesHomePage.setClickingGearIcon_Loc(custID);
-        accountDetailPage = qsalesHomePage.navigateToAccountDetailPageThroughSFDCID(AccountSFDCID);
-        accountDetailPage.clickingDetailTab();
-        String ActualTypeFieldValue = accountDetailPage.getTypeFieldValue();
-        Assert.assertEquals(ActualTypeFieldValue,"Customer - Direct");
 
-        String ActualIndustryFieldValue = accountDetailPage.getIndustryFieldValue();
-        Assert.assertEquals(ActualIndustryFieldValue,"Communications");
-
-    }
-
- */
     @Test(description = "Searching recently created Account globally by using customer ID",dependsOnMethods = "editingAccountPageByClickingInlineEditing")
     public void searchingAccountCustomerIDThroguhGlobalSearch(){
         String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
@@ -171,11 +154,14 @@ public class AccountScenarioTest extends BaseTest {
     public void openingAccountDetailPageThroughReports(){
         String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
         System.out.println("Value of the CUstID ===> " + custID);
+        accountHomePage = qsalesHomePage.clickingAccountsTab();
+        String actualAccountHeader = accountHomePage.getAccountHeader();
+        System.out.println("Value of the actualAccountHeader ===> " + actualAccountHeader);
         reportsHomePage = qsalesHomePage.clickReportsTab();
         reportsHomePage.clickingNewReportsBtn();
         reportBuilderPage = reportsHomePage.selectingAllReportOption("Accounts");
-        reportsDetailPage =
-                reportBuilderPage.buildingReportByUsingCustomerID("Account Name","Customer ID","Customer ID",custID);
+        //reportsDetailPage =
+                reportBuilderPage.buildingReportObjectID(actualAccountHeader,"Account Name","Type",4,"Customer ID","Customer Priority","Customer ID",custID,"Customer Priority","All accounts");
         accountDetailPage = reportsDetailPage.openingAccountDetailPageByClickingAccountLink();
         accountDetailPage.clickingDetailTabAfterOpeningAccountFromReport();
         String ActualratingFieldValue = accountDetailPage.getRatingFieldValue();

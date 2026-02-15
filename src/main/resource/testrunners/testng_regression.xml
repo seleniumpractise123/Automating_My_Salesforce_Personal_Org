@@ -4,7 +4,7 @@
 <listeners>
    <listener class-name="com.qa.salesforce.listeners.ExtentReportListener"/>
 </listeners>
-  <test  name="Account Scenario's Test">
+  <test name="Account Scenario Test">
       <classes>
           <class name="com.qa.salesforce.tests.AccountScenarioTest"/>
       </classes>
@@ -13,6 +13,12 @@
     <test  name="Contact Scenario Test">
         <classes>
             <class name="com.qa.salesforce.tests.ContactsScenarioTest"/>
+        </classes>
+    </test>
+
+    <test  name="Lead Scenario Test">
+        <classes>
+            <class name="com.qa.salesforce.tests.LeadSceanriosTest"/>
         </classes>
     </test>
 

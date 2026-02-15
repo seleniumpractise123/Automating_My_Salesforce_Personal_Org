@@ -28,7 +28,7 @@ public class ContactDetailPage {
     private By clickingDetailTabOnContact_Loc = By.xpath("(//lightning-tab-bar[@exportparts='tab-bar, tab-item'])[position()=1]//li[@data-tab-value='detailTab']/a");
     private By fetchLeadSourceField_Loc = By.xpath("//span[text()='Lead Source']//ancestor::records-record-layout-row[@class='slds-form__row']//lightning-formatted-text[@slot='outputField']");
     private By fetchDepartmentField_Loc = By.xpath("//span[text()='Department']//ancestor::records-record-layout-row[@class='slds-form__row']//lightning-formatted-text[@slot='outputField']");
-    private By contactIDFieldValue_Loc = By.xpath("//span[text()='Contact ID']//ancestor::records-record-layout-row[@class='slds-form__row']//div[@class='slds-form-element__control']//lightning-formatted-text[@slot='outputField']");
+    private By contactIDFieldValue_Loc = By.xpath("//span[text()='Custom_Contact ID']//ancestor::records-record-layout-row[@class='slds-form__row']//div[@class='slds-form-element__control']//lightning-formatted-text[@slot='outputField']");
     private By moreBtn_Loc = By.xpath("(//div[contains(@class,'actionsContainer')]//ul[@class='slds-button-group-list' and @role='presentation'])[position()=1]/li[contains(@class,'slds-dropdown-trigger_clic')]//button");
     private By fetchLevlField_Loc = By.xpath("(//span[text()='Level']//ancestor::records-record-layout-row[@class='slds-form__row']//lightning-formatted-text[@slot='outputField'])[position()=2]");
     private By clickingInlineEditBtn_Loc = By.xpath("//records-record-layout-item[@field-label='Home Phone']//div[@class='slds-form-element__control']/button[@title='Edit Home Phone']");

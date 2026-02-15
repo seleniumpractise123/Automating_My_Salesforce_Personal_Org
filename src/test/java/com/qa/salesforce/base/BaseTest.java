@@ -29,6 +29,10 @@ public class BaseTest {
 	protected ContactsHomePage contactsHomePage;
 	protected Contacts contacts;
 	protected ContactDetailPage contactDetailPage;
+	protected LeadsHomePage leadsHomePage;
+	protected LeadsDetailPage leadsDetailPage;
+	protected LeadsPage leadsPage;
+	protected OpportunitiesDetailPage opportunitiesDetailPage;
 	protected ExcelUtil excelUtil;
 	protected JavaScriptUtil javaScriptUtil;
 	protected ElementUtil elementUtil;
@@ -56,6 +60,10 @@ public class BaseTest {
 		contactsHomePage = new ContactsHomePage(driver);
 		contacts = new Contacts(driver);
 		contactDetailPage = new ContactDetailPage(driver);
+		leadsHomePage = new LeadsHomePage(driver);
+		leadsPage = new LeadsPage(driver);
+		leadsDetailPage = new LeadsDetailPage(driver);
+		opportunitiesDetailPage = new OpportunitiesDetailPage(driver);
 		softAssert = new SoftAssert();
 	}
 	
