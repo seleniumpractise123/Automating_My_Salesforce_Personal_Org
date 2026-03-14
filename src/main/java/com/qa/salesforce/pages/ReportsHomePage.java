@@ -24,7 +24,7 @@ public class ReportsHomePage {
     }
 
     private By clickingNewReportBtn_Loc = By.xpath("(//div[contains(@class,'resize-reflow_flex-wrap')])[2]//a[@title='New Report']");
-    private By selectingAllReportType_Loc = By.xpath("(//span[text()='Create Report']/ancestor::div[contains(@class,'recommended-report-type-picker-container')]//div[contains(@class,'report-type-picker')])[position()=2]//ul[@role='listbox']//li[@class='slds-nav-vertical__item']/a[@aria-label='All Report Type Category']");
+    private By selectingAllReportType_Loc = By.xpath("//div[contains(@class,'report-type-picker-content')]//li[@role='presentation']//a[@aria-label='All Report Type Category']");
     private By clickingReportSearchBox_Loc = By.xpath("//label[contains(text(),'Search Report Types...')]/parent::div[contains(@class,'report-type-search-no-filter')]//input[contains(@placeholder,'Search Report Types...') and @type='search']");
     //private By selectingReportName_Loc = By.xpath("(//table[contains(@aria-label,'Recently Used Report Types list')]/tbody//td[@role='gridcell'])[position()=4]//a");
     private By clickingStartNewReportBtn_Loc = By.id("start-report-btn");

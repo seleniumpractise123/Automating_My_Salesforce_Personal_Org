@@ -3,6 +3,7 @@ package com.qa.salesforce.pages;
 import com.qa.salesforce.utils.ElementUtil;
 import com.qa.salesforce.utils.JavaScriptUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
@@ -15,6 +16,7 @@ public class AccountDetailPage {
     private ElementUtil eleUtil;
     private JavaScriptUtil javaScriptUtil;
     Actions actions;
+    private JavascriptExecutor js;
 
     public AccountDetailPage(WebDriver driver) {
         //TODO Auto-generated constructor stub
@@ -23,6 +25,8 @@ public class AccountDetailPage {
         eleUtil = new ElementUtil(this.driver);
         javaScriptUtil = new JavaScriptUtil(driver);
         actions = new Actions(this.driver);
+        js = (JavascriptExecutor) this.driver;
+        js = (JavascriptExecutor) this.driver;
     }
 
     private By detailTabLoc = By.xpath(" (//lightning-tab-bar[@variant='standard' and contains(@exportparts,'tab-item')])[position()=1]/ul/li/a[@id='detailTab__item']");
@@ -49,6 +53,10 @@ public class AccountDetailPage {
     private By clickingConfirmingDeleteBtn_Loc = By.xpath("(//span[text()='Delete'])[position()=2]/parent::button[@title='Delete']");
     private By clickingNewContactBtnFromAccount_Loc = By.xpath("//div[@class='slds-align_absolute-center']//button[@name='NewContact' and @type='button']");
     private By clickingContactHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Contacts']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
+    private By clickingNewbuttonFromAccountRelatedList_Loc = By.xpath("//li[@class='visible' and contains(@data-target-selection-name,'sfdc:StandardButton.Opportunity.New')]//button[@name='New' and @type='button']");
+    private By ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Opportunities']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
+
+
 
     //Methods
     public void clickingDetailTab(){
@@ -330,6 +338,38 @@ public class AccountDetailPage {
         return new ContactsHomePage(driver);
 
     }
+
+    public OpportunitiesPage setClickingNewBtnFromAccountRelatedList(){
+        try {
+            Thread.sleep(10000);
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.drawBorder(driver.findElement(clickingNewbuttonFromAccountRelatedList_Loc));
+            javaScriptUtil.clickElementByJS(clickingNewbuttonFromAccountRelatedList_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return new OpportunitiesPage(driver);
+    }
+
+    public OpportunitiesHomePage setClickingOpportunitiesHeaderLinkFromAccountRelatedList(){
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(300);
+            //javaScriptUtil.drawBorder(driver.findElement(By.xpath("(//button[text()='Upcoming & Overdue'])[2]")));
+            //javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("(//button[text()='Upcoming & Overdue'])[2]")));
+            js.executeScript("window.scrollBy(0,1000)");
+            javaScriptUtil.drawBorder(driver.findElement(ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc));
+            eleUtil.doMoveToElementClick(ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+       return new OpportunitiesHomePage(driver);
+    }
+
+
 
 
 }

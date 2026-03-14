@@ -95,6 +95,7 @@ public class LeadsHomePage {
     public void checkingLeadIDFilterIsAvailableOrNot(){
         try {
             Thread.sleep(15000);
+            selectingAllLeadsListView();
                clicikingFileterBtn();
                 if(driver.findElement(By.xpath("//span[text()='Custom_Lead ID']")).isDisplayed()){
                     System.out.println("Driver Came to Custom Lead ID filters If part");

@@ -33,6 +33,10 @@ public class BaseTest {
 	protected LeadsDetailPage leadsDetailPage;
 	protected LeadsPage leadsPage;
 	protected OpportunitiesDetailPage opportunitiesDetailPage;
+	protected OpportunitiesHomePage opportunitiesHomePage;
+	protected OpportunitiesPage opportunitiesPage;
+	protected ProductsHomePage productsHomePage;
+	protected ProductDetailPage productDetailPage;
 	protected ExcelUtil excelUtil;
 	protected JavaScriptUtil javaScriptUtil;
 	protected ElementUtil elementUtil;
@@ -64,6 +68,10 @@ public class BaseTest {
 		leadsPage = new LeadsPage(driver);
 		leadsDetailPage = new LeadsDetailPage(driver);
 		opportunitiesDetailPage = new OpportunitiesDetailPage(driver);
+		opportunitiesHomePage = new OpportunitiesHomePage(driver);
+		opportunitiesPage = new OpportunitiesPage(driver);
+		productsHomePage = new ProductsHomePage(driver);
+		productDetailPage = new ProductDetailPage(driver);
 		softAssert = new SoftAssert();
 	}
 	

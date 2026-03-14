@@ -42,6 +42,9 @@ public class QSALESHomePage {
     private By contactHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
     private By clickingLeadsTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Leads']");
     private By LeadHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
+    private By setClickingOpportunitiesTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Opportunities']");
+
+
     public AccountHomePage clickingAccountsTab(){
         //eleUtil.doClick(AccountTabLoc, 10);
         System.out.println("Compiler came to clickingAccountsTab method");
@@ -276,6 +279,8 @@ public class QSALESHomePage {
 
 
 
+
+
     public LeadsHomePage setClickingLeadsTab(){
         try {
             Thread.sleep(15000);
@@ -299,6 +304,56 @@ public class QSALESHomePage {
         return new LeadsDetailPage(driver);
     }
 
+    public OpportunitiesHomePage clickingOpportunitiesTab(){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            eleUtil.doMoveToElementClick(setClickingOpportunitiesTab_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+       return new OpportunitiesHomePage(driver);
+    }
+
+    public OpportunitiesDetailPage navigatingToOpportunityDetailPageByUsingUrl(String OppUrl){
+        System.out.println("Value of the OppUrl====> " + OppUrl);
+        // Find where "https" starts
+        int startIndex = OppUrl.indexOf("https");
+        // Extract substring from that index
+        String opurl = OppUrl.substring(startIndex);
+        System.out.println("Value of the Opportunity URL====> " + OppUrl);
+        driver.get(OppUrl);
+        return new OpportunitiesDetailPage(driver);
+    }
+
+    public OpportunitiesDetailPage searchOpportunityIDGlobally(String OppID){
+        System.out.println("Value of the Opportunity ID====> " + OppID);
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(20000);
+            javaScriptUtil.waitForPageLoad(40);
+            actions.moveToElement(driver.findElement(globalSearch_Loc)).click().build().perform();
+            //eleUtil.doSendKeys(enterSearchContext_Loc,cutID);
+            javaScriptUtil.waitForPageLoad(30);
+            javaScriptUtil.drawBorder(driver.findElement(enterSearchContext_Loc));
+            eleUtil.doActionsSendKeys(enterSearchContext_Loc,OppID);
+            Thread.sleep(15000);
+            WebElement searchOption = driver.findElement(By.xpath("//div[@role='option']//span[contains(@title,'Show more results for')]//span"));
+            javaScriptUtil.drawBorder(searchOption);
+            actions.moveToElement(searchOption).sendKeys(Keys.ENTER).perform();
+            //actions.moveToElement(driver.findElement(accountHeaderLink_Loc)).click().build().perform();
+            //eleUtil.doMoveToElement(accountHeaderLink_Loc);
+            //javaScriptUtil.waitForPageLoad(40);
+            Thread.sleep(15000);
+            javaScriptUtil.drawBorder(driver.findElement(LeadHeaderLink_Loc));
+            javaScriptUtil.clickElementByJS(LeadHeaderLink_Loc);
+            javaScriptUtil.waitForPageLoad(30);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return new OpportunitiesDetailPage(driver);
+    }
 
 
 

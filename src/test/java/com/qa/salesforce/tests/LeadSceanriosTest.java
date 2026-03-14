@@ -132,7 +132,7 @@ public class LeadSceanriosTest extends BaseTest {
 
 
     }
-
+/*
     @Test(description = "Opening Lead Detail page Through List view")
     public void openingLeadDetailPageThroughListView(){
         String Lead_ID = PropertyReader.readDataFromFile("LatestLeadID");
@@ -148,7 +148,9 @@ public class LeadSceanriosTest extends BaseTest {
         //Assert.assertEquals(actualRatingFieldValue,"Warm");
     }
 
-    @Test(description = "Converting the recently created lead",dependsOnMethods = "openingLeadDetailPageThroughListView")
+ */
+
+    @Test(description = "Converting the recently created lead",dependsOnMethods = "OpeningLeadDetailPageThroughReports")
     public void convertingRecentlyCreatedLead(){
         String LeadURL = PropertyReader.readDataFromFile("LatestLeadURL");
         leadsDetailPage = qsalesHomePage.navigatingToLeadDetailPageByUsingUrl(LeadURL);

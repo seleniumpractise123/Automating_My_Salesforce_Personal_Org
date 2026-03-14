@@ -36,7 +36,7 @@ public class ReportBuilderPage {
     private By enteringNewFIeldFilterValue_Loc = By.id("undefined-input");
     private By enteringColumnField_Loc = By.xpath("(//div[@class='sectionable-table-section'])[position()=2]//div[@role='none']/input[@placeholder='Add column...' and @role='textbox']");
     private By clickingSaveBtnOnAddColumnFilterCondition_Loc = By.xpath("(//footer[contains(@class,'filter-footer')]//div[contains(@class,'filter-button-group-margin')]/button)[last()]");
-    private By clearColumnsFIlter_Loc = By.xpath("(//div[@class='sectionable-table-section'])[position()=2]//ul[@role='group']/li//span[@class='column-name']");
+    private By clearColumnsFIlter_Loc = By.xpath("(//div[@class='sectionable-table-section'])[position()=2]//ul[@role='list']//li[@role='presentation']//span[@class='column-name']");
     private By clickingConvertPicklistBn_Loc = By.xpath("//label[text()='Converted']/ancestor::div[@class='slds-popover__body']//button[@id='undefined-list']");
 
 
@@ -57,6 +57,7 @@ public class ReportBuilderPage {
 
 
     public void clearningColumnsValue(String ColumnFilterValue1,String ColumnFilterValue2,int bound){
+        System.out.println("Compiler came to clearningColumnsValue method");
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
@@ -76,9 +77,9 @@ public class ReportBuilderPage {
                         System.out.println("No Need to remove the column");
                     }else{
 
-                        javaScriptUtil.waitForPageLoad(150);
-                        By clearColumnFilter = By.xpath("//h2[text()='Columns']/ancestor::div[@class='sectionable-table-section']//div[@class='sectionable-table-group-content']/ul[@role='group']//span[@aria-label='Remove Column: "+columnFilterText+"']");
-                        javaScriptUtil.waitForPageLoad(150);
+                        javaScriptUtil.waitForPageLoad(300);
+                        By clearColumnFilter = By.xpath("//h2[text()='Columns']/ancestor::div[@class='sectionable-table-section']//div[@class='sectionable-table-group-content']/ul/li[@role='presentation']//span[@role='button' and contains(@aria-label,'Remove Column: "+columnFilterText+"')]");
+                        javaScriptUtil.waitForPageLoad(300);
                         eleUtil.doClick(clearColumnFilter);
                         javaScriptUtil.waitForPageLoad(40);
                     }
@@ -292,34 +293,32 @@ public class ReportBuilderPage {
     }
 
 
-    public void buildingReportByUsingLeadID(String ColumnFilterValue1, String ColumnFilterValue2, int bound, String addColumn1, String addColumn2,
-                                            String FieldFilter, String filterValue, String FieldFilter1, String allFilter){
-
-
-
-
-    }
-
     public ReportsDetailPage buildingReportObjectID(String Object,String ColumnFilterValue1,String ColumnFilterValue2,int bound,String addColumn1,
                                                             String addColumn2,String FieldFilter,String filterValue,String FieldFilter1,String allFilter){
-        String additionalColumn = addColumn2;
-        String additionalFilter = FieldFilter1;
+        String objectColumnFilterValue1 = ColumnFilterValue1;
+        String objectColumnFilterValue2 = ColumnFilterValue2;
+        String objectAddColumn1 = addColumn1;
+        String objectAddColumn2 = addColumn2;
+        String objectFieldFilter = FieldFilter;
+        String objectFieldFilter1 = FieldFilter1;
+        String objectFieldFilterValue = filterValue;
+        String objectAllFilter = allFilter;
 
         try {
             if(Object.contains("Leads")){
                 javaScriptUtil.waitForPageLoad(40);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(40);
-                clearningColumnsValue(ColumnFilterValue1,ColumnFilterValue2,bound);
+                clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
 
-                doEnterNewColumnFieldforLeadReport(addColumn1);
-                doEnterConvertedNewColumnFieldforLeadReport(addColumn2);
+                doEnterNewColumnFieldforLeadReport(objectAddColumn1);
+                doEnterConvertedNewColumnFieldforLeadReport(objectAddColumn2);
                 clickingFilterTabBtn();
                 javaScriptUtil.waitForPageLoad(60);
-                setClickingShowMeFilterCondition(allFilter);
+                setClickingShowMeFilterCondition(objectAllFilter);
                 setClickingCreatedDateFilterCondition();
-                putObjectFilterFieldValue(FieldFilter,filterValue);
-                putConvertedFilterFieldValue(FieldFilter1);
+                putObjectFilterFieldValue(objectFieldFilter,objectFieldFilterValue);
+                putConvertedFilterFieldValue(objectFieldFilter1);
                 doClickingReportRunBtn();
                 javaScriptUtil.waitForPageLoad(150);
 
@@ -329,13 +328,13 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(250);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(250);
-                clearningColumnsValue(ColumnFilterValue1,ColumnFilterValue2,bound);
-                doEnterNewCustomerIDColumnField(addColumn1);
+                clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
+                doEnterNewCustomerIDColumnField(objectAddColumn1);
                 clickingFilterTabBtn();
                 javaScriptUtil.waitForPageLoad(60);
-                setClickingShowMeFilterCondition(allFilter);
+                setClickingShowMeFilterCondition(objectAllFilter);
                 setClickingCreatedDateFilterCondition();
-                putObjectFilterFieldValue(FieldFilter,filterValue);
+                putObjectFilterFieldValue(objectFieldFilter,objectFieldFilterValue);
                 doClickingReportRunBtn();
                 javaScriptUtil.waitForPageLoad(150);
             }else if (Object.contains("Contacts")){
@@ -344,17 +343,30 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(250);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(250);
-                clearningColumnsValue(ColumnFilterValue1,ColumnFilterValue2,bound);
-                doEnterNewCustomerIDColumnField(addColumn1);
+                clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
+                doEnterNewCustomerIDColumnField(objectAddColumn1);
                 clickingFilterTabBtn();
                 javaScriptUtil.waitForPageLoad(60);
-                setClickingShowMeFilterCondition(allFilter);
+                setClickingShowMeFilterCondition(objectAllFilter);
                 setClickingCreatedDateFilterCondition();
-                putObjectFilterFieldValue(FieldFilter,filterValue);
+                putObjectFilterFieldValue(objectFieldFilter,objectFieldFilterValue);
+                doClickingReportRunBtn();
+                javaScriptUtil.waitForPageLoad(150);
+            }else if (Object.contains("Opportunities")) {
+                System.out.println("Driver creating Report for remaining Object");
+                javaScriptUtil.waitForPageLoad(250);
+                javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
+                javaScriptUtil.waitForPageLoad(250);
+                clearningColumnsValue(objectColumnFilterValue1, objectColumnFilterValue2, bound);
+                doEnterNewCustomerIDColumnField(objectAddColumn1);
+                clickingFilterTabBtn();
+                javaScriptUtil.waitForPageLoad(60);
+                //setClickingShowMeFilterCondition(allFilter);
+                setClickingCreatedDateFilterCondition();
+                putObjectFilterFieldValue(objectFieldFilter, objectFieldFilterValue);
                 doClickingReportRunBtn();
                 javaScriptUtil.waitForPageLoad(150);
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

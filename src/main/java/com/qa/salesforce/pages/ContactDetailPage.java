@@ -41,6 +41,8 @@ public class ContactDetailPage {
     private By clickingDetailTabThroughReport_Loc = By.xpath("//a[text()='Details']");
     private By clickingDetailTabAfterReportLoc = By.xpath("//a[text()='Details']");
     private By clickingConfirmingDeleteBtn_Loc = By.xpath("(//span[text()='Delete'])[position()=2]/parent::button[@title='Delete']");
+    private By clickingCreateNewOpportunityBtnfromContactRelatedList_Loc = By.xpath("(//li[@class='visible' and contains(@data-target-selection-name,'sfdc:StandardButton.Opportunity.New') and @role='presentation']//button[@name='New' and @type='button'])[last()]");
+    private By clickingOpportunitiesHeader_Loc = By.xpath("//article[@aria-label='Opportunities']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
 
 
     public void clickDetailTabBtn(){
@@ -280,6 +282,33 @@ public class ContactDetailPage {
         driver.navigate().refresh();
         javaScriptUtil.waitForPageLoad(40);
         return new ContactsHomePage(driver);
+
+    }
+
+    public  OpportunitiesPage setClickingCreateNewOpportunityBtnfromContactRelatedList(){
+        try {
+            Thread.sleep(10000);
+            javaScriptUtil.waitForPageLoad(150);
+            eleUtil.doMoveToElementClick(clickingCreateNewOpportunityBtnfromContactRelatedList_Loc);
+            javaScriptUtil.waitForPageLoad(250);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+     return new OpportunitiesPage(driver);
+    }
+
+    public OpportunitiesHomePage setClickingOpportunitiesHeader(){
+        try {
+            Thread.sleep(10000);
+            javaScriptUtil.waitForPageLoad(150);
+            eleUtil.doMoveToElementClick(clickingOpportunitiesHeader_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new OpportunitiesHomePage(driver);
 
     }
 
