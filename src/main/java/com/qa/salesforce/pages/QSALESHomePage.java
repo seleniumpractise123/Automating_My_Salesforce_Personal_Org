@@ -43,7 +43,7 @@ public class QSALESHomePage {
     private By clickingLeadsTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Leads']");
     private By LeadHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
     private By setClickingOpportunitiesTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Opportunities']");
-
+    private By clickingCasesTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Cases']");
 
     public AccountHomePage clickingAccountsTab(){
         //eleUtil.doClick(AccountTabLoc, 10);
@@ -354,7 +354,12 @@ public class QSALESHomePage {
         }
         return new OpportunitiesDetailPage(driver);
     }
-
+    public CasesHomePage setClickingCasesTab(){
+        eleUtil.checkElementClickable(clickingCasesTab_Loc, 200);
+        eleUtil.doMoveToElementClick(clickingCasesTab_Loc);
+        javaScriptUtil.waitForPageLoad(200);
+        return new CasesHomePage(driver);
+    }
 
 
 }

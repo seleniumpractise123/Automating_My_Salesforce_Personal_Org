@@ -145,7 +145,6 @@ public class OpportunitiesScenariosTest extends BaseTest {
         System.out.println("Value of the actualProductCode=============>"+actualProductCode);
         Assert.assertEquals(actualProductCode, productCode);
     }
-
     /*
     @Test(description = "Adding Multiple Products to Recently Created Opportunity",dataProvider = "AddingMultipleProductsToRecentlyCreatedOpp")
     public void addingMultipleProductsToRecentlyCreatedOpportunity(String productName, String pQty){
@@ -160,7 +159,6 @@ public class OpportunitiesScenariosTest extends BaseTest {
     }
 
      */
-
     @Test(description = "Updating Opportunity Stage field values and checking stage is updating correctly",dependsOnMethods = "AddingSingleProductsToRecentlyCreatedOpportunity")
     public void updatingStageFieldValue(){
         String OpportunityStage = null;

@@ -37,6 +37,9 @@ public class BaseTest {
 	protected OpportunitiesPage opportunitiesPage;
 	protected ProductsHomePage productsHomePage;
 	protected ProductDetailPage productDetailPage;
+	protected CasesHomePage casesHomePage;
+	protected CasesDetailPage casesDetailPage;
+	protected Cases cases;
 	protected ExcelUtil excelUtil;
 	protected JavaScriptUtil javaScriptUtil;
 	protected ElementUtil elementUtil;
@@ -72,6 +75,9 @@ public class BaseTest {
 		opportunitiesPage = new OpportunitiesPage(driver);
 		productsHomePage = new ProductsHomePage(driver);
 		productDetailPage = new ProductDetailPage(driver);
+		casesHomePage = new CasesHomePage(driver);
+		casesDetailPage = new CasesDetailPage(driver);
+		cases = new Cases(driver);
 		softAssert = new SoftAssert();
 	}
 	

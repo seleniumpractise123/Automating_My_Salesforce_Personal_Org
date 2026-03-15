@@ -38,7 +38,7 @@ public class ProductsHomePage {
         try {
             Thread.sleep(10000);
             javaScriptUtil.waitForPageLoad(150);
-            productsList = driver.findElements(By.xpath("//table[@role='grid' and @data-aura-class='uiVirtualDataTable']/tbody/tr//button[contains(@title,'Locked Product: Item')]"));
+            productsList = driver.findElements(By.xpath("//span[text()='Quantity']/ancestor::table[@role='grid' and @data-aura-class='uiVirtualDataTable']/tbody//td//button[contains(@title,'Edit Quantity: Item')]"));
             System.out.println("Size of the productList============>" + productsList.size());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -168,10 +168,10 @@ public class ProductsHomePage {
     public void doClickAndEnterQtyToMultipleProducts(String pQty){
 
         try {
-            driver.navigate().refresh();
+            //driver.navigate().refresh();
             Thread.sleep(10000);
             javaScriptUtil.waitForPageLoad(150);
-            /*
+
             int recordCount = getListOfProducts().size();
             System.out.println("Value of the recordCount===========>"+recordCount);
             for(int i=0; i < recordCount;i++){
@@ -180,18 +180,22 @@ public class ProductsHomePage {
                 System.out.println("Value of the productQtyBtnEle=========>"+productQtyBtnEle);
                 System.out.println("Value of the productQtyBtn name=========>"+productQtyBtnEle.getText().toString());
                 actions.moveToElement(productQtyBtnEle).click().build().perform();
-
-
+                }
+            String[] quantityArray = pQty.split(",");
+            for(int j = 0; j < quantityArray.length; j++) {
+                System.out.println("Value of the quantityArray[i].====>" + quantityArray[j]);
+                addingQtyToMultipleProducts(quantityArray[j].trim());
             }
-
-             */
-            opportunitiesDetailPage.setSetClickingOpportunityRelatedListTab();
-            opportunitiesDetailPage.setClickingAddProductBtnOnOpportunityRelatedList();
+            //opportunitiesDetailPage.setSetClickingOpportunityRelatedListTab();
+            //opportunitiesDetailPage.setClickingAddProductBtnOnOpportunityRelatedList();
+            /*
             String[] quantityArray = pQty.split(",");
             for (int j = 0; j < quantityArray.length; j++) {
                 System.out.println("Value of the quantityArray[i].====>"+quantityArray[j]);
                 addingQtyToMultipleProducts(quantityArray[j].trim());
             }
+
+             */
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -202,8 +206,8 @@ public class ProductsHomePage {
     public void addingQtyToMultipleProducts(String pQty){
         try {
             Thread.sleep(1000);
-            eleUtil.waitForElementsVisible(doClickQtyFieldBtn_Loc, 150);
-            eleUtil.doMoveToElementClick(doClickQtyFieldBtn_Loc);
+            //eleUtil.waitForElementsVisible(doClickQtyFieldBtn_Loc, 150);
+            //eleUtil.doMoveToElementClick(doClickQtyFieldBtn_Loc);
             eleUtil.doSendKeys(doEnterQtyOfProduct_Loc, pQty);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
