@@ -43,7 +43,7 @@ public class LoginPage {
         try{
         loginToSalesforce(username,password);
         driver.navigate().refresh();
-            Thread.sleep(15000);
+            Thread.sleep(20000);
             javaScriptUtil.waitForPageLoad(150);
         javaScriptUtil.clickElementByJS(appLanchLocator);
         //javaScriptUtil.waitForPageLoad(30);

@@ -2,8 +2,8 @@ package com.qa.salesforce.pages;
 
 import com.qa.salesforce.utils.ElementUtil;
 import com.qa.salesforce.utils.JavaScriptUtil;
-import org.jspecify.annotations.Nullable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -43,6 +43,16 @@ public class LeadsDetailPage {
     private By clickingCOnvertBtn_Loc = By.xpath("(//div[@class='modal-footer slds-modal__footer']//button)[2]");
     private By clickingConvertedOpp_Loc = By.xpath("((//div[@class='containerBodyPadding']//div[@class='recordLayout'])[last()]//div[@class='bodyConvertedItem']//a)[position()=1]");
     private By clickingDetailTabAfterReportLoc = By.xpath("//a[text()='Details']");
+    private By clickingAddToCampaignBtnField_Loc = By.xpath("(//div[@data-aura-class='forceRelatedListCardHeader'])[5]//div[@class='actionsContainer']//a[@role='button']");
+    private By campaignField_Loc = By.xpath("//span[text()='Campaign']/ancestor::div//input[contains(@placeholder,'Search Campaigns...') and @title='Search Campaigns']");
+    private By clickingSearchIcon = By.xpath("//lightning-base-combobox-item[@data-value='actionAdvancedSearch' and @role='option']//span");
+    private By selectingCampaignFieldValue_loc = By.xpath("//table[contains(@class,'forceRecordLayout')]/tbody//a[@data-aura-class='forceOutputLookup']");
+    private By clickingSelectBtnOnLookupPage_Loc = By.xpath("//lightning-modal-footer[@class='lightning-lookup-advanced-modal__footer']//button[@kx-scope='button-brand']");
+    private By clickNextBtnOnCampaignDailogBox_Loc = By.xpath("//div[contains(@class,'runtime_sales_campaignAddMember')]/button[text()='Next']");
+    private By clickStatusBtnOnAddCampaignDailogBox_Loc = By.xpath("//span[text()='Status']//ancestor::div[@class='slds-form-element slds-hint-parent']//button[@name='campaignMemberStatus']");
+    private By clcikingSaveBtnOnAddCampaignResponseDailogBox_Loc = By.xpath("//div[@class='inlineFooter']//button[@title='Save']");
+
+
 
 
     public void doClickDetailTab(){
@@ -421,8 +431,53 @@ public class LeadsDetailPage {
 
     }
 
+    public void addRecentlyCreatedCampaignToLead(){
+        try {
+            Thread.sleep(10000);
+            //javaScriptUtil.selectingDrpDownValuesDynamically(clickingAddToCampaignBtnField_Loc, "//div[text()='Add to Campaign']/parent::a[@data-target-selection-name='sfdc:StandardButton.CampaignMember.AddCampaign']");
+            eleUtil.doMoveToElementClick(clickingAddToCampaignBtnField_Loc);
+            eleUtil.doMoveToElementClick(By.xpath("//div[text()='Add to Campaign']/parent::a[@data-target-selection-name='sfdc:StandardButton.CampaignMember.AddCampaign']"));
+            javaScriptUtil.waitForPageLoad(200);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
 
+        }
 
+    }
+
+    public void setCampaignFieldValue(String custID){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            javaScriptUtil.drawBorder(driver.findElement(campaignField_Loc));
+            javaScriptUtil.clickElementByJS(campaignField_Loc);
+            eleUtil.doSendKeys(campaignField_Loc,custID);
+            actions.moveToElement(driver.findElement(campaignField_Loc)).sendKeys(Keys.ENTER).build().perform();
+            Thread.sleep(20000);
+            javaScriptUtil.drawBorder(driver.findElement(selectingCampaignFieldValue_loc));
+            javaScriptUtil.clickElementByJS(selectingCampaignFieldValue_loc);
+            Thread.sleep(15000);
+            //javaScriptUtil.clickElementByJS(clickingSelectBtnOnLookupPage_Loc);
+            //javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public LeadsDetailPage respondingToCampaign(){
+        try {
+            Thread.sleep(10000);
+            eleUtil.doMoveToElementClick(clickNextBtnOnCampaignDailogBox_Loc);
+            javaScriptUtil.waitForPageLoad(200);
+            javaScriptUtil.selectingDrpDownValuesDynamically(clickStatusBtnOnAddCampaignDailogBox_Loc,"//span[text()='Responded']");
+            javaScriptUtil.waitForPageLoad(200);
+            eleUtil.doMoveToElementClick(clcikingSaveBtnOnAddCampaignResponseDailogBox_Loc);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new LeadsDetailPage(driver);
+    }
 
 
 

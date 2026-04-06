@@ -40,6 +40,9 @@ public class BaseTest {
 	protected CasesHomePage casesHomePage;
 	protected CasesDetailPage casesDetailPage;
 	protected Cases cases;
+	protected CampaignsHomePage campaignsHomePage;
+	protected CampaignsPage campaignsPage;
+	protected CampaignsDetailPage campaignsDetailPage;
 	protected ExcelUtil excelUtil;
 	protected JavaScriptUtil javaScriptUtil;
 	protected ElementUtil elementUtil;
@@ -78,6 +81,9 @@ public class BaseTest {
 		casesHomePage = new CasesHomePage(driver);
 		casesDetailPage = new CasesDetailPage(driver);
 		cases = new Cases(driver);
+		campaignsHomePage = new CampaignsHomePage(driver);
+		campaignsPage = new CampaignsPage(driver);
+		campaignsDetailPage = new CampaignsDetailPage(driver);
 		softAssert = new SoftAssert();
 	}
 	

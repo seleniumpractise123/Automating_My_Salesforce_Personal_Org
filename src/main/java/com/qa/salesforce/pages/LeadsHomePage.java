@@ -37,7 +37,8 @@ public class LeadsHomePage {
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doMoveToElementClick(clickingNewButton_Loc);
+            //eleUtil.doMoveToElementClick(clickingNewButton_Loc);
+            javaScriptUtil.clickElementByJS(clickingNewButton_Loc);
             javaScriptUtil.waitForPageLoad(150);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

@@ -36,9 +36,8 @@ public class OpportunitiesDetailPage {
 
     public void doClickDetailTab(){
         try {
-            driver.navigate().refresh();
             Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(250);
+            javaScriptUtil.waitForPageLoad(400);
             javaScriptUtil.clickElementByJS(clickingOppDetailTab_Loc);
             javaScriptUtil.waitForPageLoad(150);
         } catch (InterruptedException e) {
@@ -126,7 +125,7 @@ public class OpportunitiesDetailPage {
 
     public void setSetClickingOpportunityRelatedListTab(){
         try {
-            Thread.sleep(10000);
+            Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(300);
             javaScriptUtil.drawBorder(driver.findElement(setClickingOpportunityRelatedListTa_Loc));
             eleUtil.doMoveToElementClick(setClickingOpportunityRelatedListTa_Loc);

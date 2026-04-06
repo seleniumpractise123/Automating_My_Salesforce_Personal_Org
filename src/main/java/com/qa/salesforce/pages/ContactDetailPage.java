@@ -43,7 +43,8 @@ public class ContactDetailPage {
     private By clickingConfirmingDeleteBtn_Loc = By.xpath("(//span[text()='Delete'])[position()=2]/parent::button[@title='Delete']");
     private By clickingCreateNewOpportunityBtnfromContactRelatedList_Loc = By.xpath("(//li[@class='visible' and contains(@data-target-selection-name,'sfdc:StandardButton.Opportunity.New') and @role='presentation']//button[@name='New' and @type='button'])[last()]");
     private By clickingOpportunitiesHeader_Loc = By.xpath("//article[@aria-label='Opportunities']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
-
+    private By clickingNewCaseCreationBtnFromAccountRelatedList_Loc = By.xpath("//li[@class='visible' and contains(@data-target-selection-name,'sfdc:StandardButton.Case.NewCase')]//button[@name='NewCase' and @type='button']");
+    private By ClickingCasesHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Cases']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
 
     public void clickDetailTabBtn(){
         try {
@@ -309,6 +310,34 @@ public class ContactDetailPage {
         }
 
         return new OpportunitiesHomePage(driver);
+    }
+
+    public Cases doClickingNewCaseCreationBtn(){
+        try {
+            Thread.sleep(10000);
+            javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
+            eleUtil.waitForElementsVisible(clickingNewCaseCreationBtnFromAccountRelatedList_Loc, 200);
+            eleUtil.doMoveToElementClick(clickingNewCaseCreationBtnFromAccountRelatedList_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new Cases(driver);
+    }
+
+    public CasesHomePage doClickingCasesHeaderFromContactRelatedList(){
+        try {
+            Thread.sleep(10000);
+            javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
+            eleUtil.waitForElementVisible(ClickingCasesHeaderLinkFromAccountRelatedList_Loc, 200);
+            eleUtil.doMoveToElementClick(ClickingCasesHeaderLinkFromAccountRelatedList_Loc);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new CasesHomePage(driver);
 
     }
 

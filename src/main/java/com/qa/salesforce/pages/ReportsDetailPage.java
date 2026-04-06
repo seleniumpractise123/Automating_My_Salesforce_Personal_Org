@@ -81,4 +81,19 @@ public class ReportsDetailPage {
         return new OpportunitiesDetailPage(driver);
 
     }
+
+    public CasesDetailPage openingCaseDetailPageByClickingLeadLink(){
+        try {
+            Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+            By caseDetailPageLink = By.xpath("(//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='gridcell']//a)[2]");
+            javaScriptUtil.clickElementByJS(caseDetailPageLink);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new CasesDetailPage(driver);
+
+    }
 }

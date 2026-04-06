@@ -247,6 +247,7 @@ public class ReportBuilderPage {
             javaScriptUtil.waitForPageLoad(150);
             javaScriptUtil.clickElementByJS(selectingFieldFilter);
             javaScriptUtil.waitForPageLoad(200);
+            System.out.println("Value of the enteringNewFIeldFilterValue_Loc====>"+enteringNewFIeldFilterValue_Loc);
             eleUtil.doSendKeys(enteringNewFIeldFilterValue_Loc,filterValue);
             javaScriptUtil.waitForPageLoad(200);
             actions.moveToElement(driver.findElement(clickingSaveBtnOnAddColumnFilterCondition_Loc)).click().build().perform();
@@ -310,7 +311,6 @@ public class ReportBuilderPage {
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(40);
                 clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
-
                 doEnterNewColumnFieldforLeadReport(objectAddColumn1);
                 doEnterConvertedNewColumnFieldforLeadReport(objectAddColumn2);
                 clickingFilterTabBtn();
@@ -363,6 +363,21 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(60);
                 //setClickingShowMeFilterCondition(allFilter);
                 setClickingCreatedDateFilterCondition();
+                putObjectFilterFieldValue(objectFieldFilter, objectFieldFilterValue);
+                doClickingReportRunBtn();
+                javaScriptUtil.waitForPageLoad(150);
+            }else if (Object.contains("Cases")) {
+                System.out.println("Driver creating Report for remaining Object");
+                javaScriptUtil.waitForPageLoad(250);
+                javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
+                javaScriptUtil.waitForPageLoad(250);
+                clearningColumnsValue(objectColumnFilterValue1, objectColumnFilterValue2, bound);
+                doEnterNewColumnFieldforLeadReport(objectAddColumn1);
+                doEnterNewColumnFieldforLeadReport(objectAddColumn2);
+                clickingFilterTabBtn();
+                javaScriptUtil.waitForPageLoad(60);
+                //setClickingShowMeFilterCondition(allFilter);
+                //setClickingCreatedDateFilterCondition();
                 putObjectFilterFieldValue(objectFieldFilter, objectFieldFilterValue);
                 doClickingReportRunBtn();
                 javaScriptUtil.waitForPageLoad(150);

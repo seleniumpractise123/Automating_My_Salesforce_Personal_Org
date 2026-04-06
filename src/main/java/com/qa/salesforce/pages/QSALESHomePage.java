@@ -44,6 +44,7 @@ public class QSALESHomePage {
     private By LeadHeaderLink_Loc = By.xpath("(//div[contains(@class,'forceListViewManagerGrid')])[position()=1]//div[contains(@class,'scroll-bidirectional')]//table[@data-aura-class='uiVirtualDataTable']/tbody//th[@scope='row']//a[@data-aura-class='forceOutputLookup']");
     private By setClickingOpportunitiesTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Opportunities']");
     private By clickingCasesTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Cases']");
+    private By clickingCampaignTab_Loc = By.xpath("//div[@class='slds-context-bar']/one-app-nav-bar/nav[contains(@class,'slds-context-bar__secondary') and @role='navigation']//a[@title='Campaigns']");
 
     public AccountHomePage clickingAccountsTab(){
         //eleUtil.doClick(AccountTabLoc, 10);
@@ -69,6 +70,11 @@ public class QSALESHomePage {
         String acurl = accUrl.substring(startIndex);
         System.out.println("Value of the acurl URL====> " + acurl);
         driver.get(acurl);
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return new AccountDetailPage(driver);
 
     }
@@ -354,12 +360,67 @@ public class QSALESHomePage {
         }
         return new OpportunitiesDetailPage(driver);
     }
+
+    public CasesDetailPage searchCaseIDGlobally(String CaseID){
+        System.out.println("Value of the CaseID====> " + CaseID);
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(20000);
+            javaScriptUtil.waitForPageLoad(40);
+            actions.moveToElement(driver.findElement(globalSearch_Loc)).click().build().perform();
+            //eleUtil.doSendKeys(enterSearchContext_Loc,cutID);
+            javaScriptUtil.waitForPageLoad(30);
+            javaScriptUtil.drawBorder(driver.findElement(enterSearchContext_Loc));
+            eleUtil.doActionsSendKeys(enterSearchContext_Loc,CaseID);
+            Thread.sleep(15000);
+            WebElement searchOption = driver.findElement(By.xpath("//div[@role='option']//span[contains(@title,'Show more results for')]//span"));
+            javaScriptUtil.drawBorder(searchOption);
+            actions.moveToElement(searchOption).sendKeys(Keys.ENTER).perform();
+            //actions.moveToElement(driver.findElement(accountHeaderLink_Loc)).click().build().perform();
+            //eleUtil.doMoveToElement(accountHeaderLink_Loc);
+            //javaScriptUtil.waitForPageLoad(40);
+            Thread.sleep(15000);
+            javaScriptUtil.drawBorder(driver.findElement(LeadHeaderLink_Loc));
+            javaScriptUtil.clickElementByJS(LeadHeaderLink_Loc);
+            javaScriptUtil.waitForPageLoad(30);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return new CasesDetailPage(driver);
+    }
     public CasesHomePage setClickingCasesTab(){
         eleUtil.checkElementClickable(clickingCasesTab_Loc, 200);
         eleUtil.doMoveToElementClick(clickingCasesTab_Loc);
         javaScriptUtil.waitForPageLoad(200);
+        driver.navigate().refresh();
         return new CasesHomePage(driver);
     }
 
+    public CasesDetailPage navigatingToCaseDetailPageByUsingUrl(String caseUrl){
+        System.out.println("Value of the URL====> " + caseUrl);
+        // Find where "https" starts
+        int startIndex = caseUrl.indexOf("https");
+        // Extract substring from that index
+        String acurl = caseUrl.substring(startIndex);
+        System.out.println("Value of the acurl URL====> " + caseUrl);
+        driver.get(acurl);
+        return new CasesDetailPage(driver);
+    }
+
+    public CampaignsHomePage clickingCampaignsTab(){
+        //eleUtil.doClick(AccountTabLoc, 10);
+        System.out.println("Compiler came to clicking Campaign method");
+        try {
+            driver.navigate().refresh();
+            Thread.sleep(15000);
+            //javaScriptUtil.waitForPageLoad(20);
+            javaScriptUtil.clickElementByJS(clickingCampaignTab_Loc);
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return new CampaignsHomePage(driver);
+    }
 
 }

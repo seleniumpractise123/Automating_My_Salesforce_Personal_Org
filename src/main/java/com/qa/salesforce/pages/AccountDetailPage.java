@@ -55,7 +55,8 @@ public class AccountDetailPage {
     private By clickingContactHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Contacts']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
     private By clickingNewbuttonFromAccountRelatedList_Loc = By.xpath("//li[@class='visible' and contains(@data-target-selection-name,'sfdc:StandardButton.Opportunity.New')]//button[@name='New' and @type='button']");
     private By ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Opportunities']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
-
+    private By clickingNewCaseCreationBtnFromAccountRelatedList_Loc = By.xpath("//li[@class='visible' and contains(@data-target-selection-name,'sfdc:StandardButton.Case.NewCase')]//button[@name='NewCase' and @type='button']");
+    private By ClickingCasesHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Cases']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
 
 
     //Methods
@@ -367,6 +368,23 @@ public class AccountDetailPage {
             throw new RuntimeException(e);
         }
        return new OpportunitiesHomePage(driver);
+    }
+
+    public Cases doClickingNewCaseCreationBtn(){
+        javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
+        eleUtil.waitForElementsVisible(clickingNewCaseCreationBtnFromAccountRelatedList_Loc, 200);
+        eleUtil.doMoveToElementClick(clickingNewCaseCreationBtnFromAccountRelatedList_Loc);
+        javaScriptUtil.waitForPageLoad(150);
+        return new Cases(driver);
+    }
+
+    public CasesHomePage doClickingCasesHeaderFromAccountRelatedList(){
+        javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
+        eleUtil.waitForElementVisible(ClickingCasesHeaderLinkFromAccountRelatedList_Loc, 200);
+        eleUtil.doMoveToElementClick(ClickingCasesHeaderLinkFromAccountRelatedList_Loc);
+        javaScriptUtil.waitForPageLoad(150);
+        return new CasesHomePage(driver);
+
     }
 
 
