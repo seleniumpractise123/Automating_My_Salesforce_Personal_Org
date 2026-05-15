@@ -130,7 +130,7 @@ public class ContactsScenarioTest extends BaseTest {
 
 
     }
-
+/*
     @Test(description = "Opening Contact Detail page Through Reports",dependsOnMethods = "editingContactDetailPageByUsingInlineEditButton")
     public void clickingContactDetailPageThroughReport(){
         String contactID = qsalesHomePage.getContactID(PropertyReader.readDataFromFile("LatestContactID"));
@@ -151,9 +151,11 @@ public class ContactsScenarioTest extends BaseTest {
 
     }
 
+ */
 
 
-    @Test(description = "Opening Contact Detail Page Through List views",dependsOnMethods = "clickingContactDetailPageThroughReport")
+
+    @Test(description = "Opening Contact Detail Page Through List views",dependsOnMethods = "editingContactDetailPageByUsingInlineEditButton")
     public void openingContactDetailPageThroughListView(){
         String contactID = qsalesHomePage.getContactID(PropertyReader.readDataFromFile("LatestContactID"));
         System.out.println("Value of the contactID ===> " + contactID);

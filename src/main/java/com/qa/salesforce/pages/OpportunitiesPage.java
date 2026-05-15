@@ -7,6 +7,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class OpportunitiesPage {
     private WebDriver driver;
     private ElementUtil eleUtil;
@@ -27,7 +30,7 @@ public class OpportunitiesPage {
     private By enteringStageFieldValue_Loc = By.xpath("//label[text()='Stage']/ancestor::records-record-layout-item[@field-label='Stage']//button[@aria-label='Stage' and @type='button']");
     private By enteringDescriptionFieldValue_Loc = By.xpath("//label[text()='Description']/ancestor::records-record-layout-item[@field-label='Description']//textarea[@part='textarea']");
     private By clickingSearchIcon = By.xpath("(//lightning-base-combobox-item[@data-value='actionAdvancedSearch' and @role='option']//span)[2]");
-    private By selectingAccountValue_loc = By.xpath("//div[@class='dt-outer-container']//table[contains(@class,'slds-table_resizable-cols')]//tbody/tr[@class='slds-hint-parent']//td[@role='gridcell']//span[@class='slds-radio']/input[@type='radio']");
+    private By selectingAccountValue_loc = By.xpath("(//div[@class='dt-outer-container'])[2]//table[contains(@class,'slds-table_resizable-cols')]//tbody/tr[@class='slds-hint-parent']//td[@role='gridcell']//span[@class='slds-radio']/input[@type='radio']");
     private By clickingSelectBtnOnLookupPage_Loc = By.xpath("//lightning-modal-footer[@class='lightning-lookup-advanced-modal__footer']//button[@kx-scope='button-brand']");
     private By clickingSaveBtn_Loc = By.xpath("//records-form-footer[contains(@class,'slds-docked-form-footer')]//runtime_platform_actions-action-renderer[@apiname='SaveEdit']//button[@name='SaveEdit']");
     private By clickingOpportunityCreationCheckbox_Loc = By.xpath("(//span[text()='Opportunity_Created_Account_Related_list'])[last()]//ancestor::slot[@name='inputField']//span[@part='input-checkbox']/input[@name='Opportunity_Created_Account_Related_list__c' and @type='checkbox']");
@@ -58,12 +61,15 @@ public class OpportunitiesPage {
             actions.moveToElement(driver.findElement(enteringAccountFieldValue_Loc)).sendKeys(Keys.ENTER).build().perform();
             Thread.sleep(10000);
             javaScriptUtil.drawBorder(driver.findElement(clickingSearchIcon));
-            eleUtil.doClick(clickingSearchIcon);
-            Thread.sleep(10000);
+            //eleUtil.doClick(clickingSearchIcon);
+            javaScriptUtil.clickElementByJS(clickingSearchIcon);
+            Thread.sleep(20000);
             javaScriptUtil.drawBorder(driver.findElement(selectingAccountValue_loc));
             javaScriptUtil.clickElementByJS(selectingAccountValue_loc);
             Thread.sleep(10000);
-            javaScriptUtil.drawBorder(driver.findElement(clickingSelectBtnOnLookupPage_Loc));
+            javaScriptUtil.drawBorder(driver.findElement(
+
+                    clickingSelectBtnOnLookupPage_Loc));
             javaScriptUtil.clickElementByJS(clickingSelectBtnOnLookupPage_Loc);
             //eleUtil.doMoveToElementClick(clickingSelectBtnOnLookupPage_Loc);
             //eleUtil.doClick(clickingSelectBtnOnLookupPage_Loc);
@@ -73,11 +79,20 @@ public class OpportunitiesPage {
         }
     }
 
-    public void setEnteringCloseDateField(){
+    public String setDateValueBasedOnUserGivenDays(int days) {
+        LocalDate closeDate = LocalDate.now().plusDays(days);
+        //Salesforce expects format: MM/DD/YYYY
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formattedCloseDate = closeDate.format(formatter);
+        System.out.println("Calculated Close Date===>"+formattedCloseDate);
+        return formattedCloseDate;
+    }
+
+    public void setEnteringCloseDateField(int days){
         try {
             Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringCloseDateFieldValue_Loc, "03/10/2026");
+            eleUtil.doSendKeys(enteringCloseDateFieldValue_Loc, setDateValueBasedOnUserGivenDays(days));
             javaScriptUtil.waitForPageLoad(150);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -143,12 +158,12 @@ public class OpportunitiesPage {
 
     }
 
-    public OpportunitiesDetailPage createNewOpportunity(String OppName,String custID,String stage,String desc){
+    public OpportunitiesDetailPage createNewOpportunity(String OppName,String custID,int days,String stage,String desc){
             boolean flag=false;
             while (true){
                 setOpportunityFieldName(OppName);
                 setAccountNameFieldValue(custID);
-                setEnteringCloseDateField();
+                setEnteringCloseDateField(days);
                 setEnteringStageField(stage);
                 setEnteringDescriptionField(desc);
                 setClickingSaveBtn();
@@ -166,11 +181,11 @@ public class OpportunitiesPage {
 
     }
 
-    public AccountDetailPage createNewOpportunityFromAccountRelatedList(String OppName,String stage,String desc){
+    public AccountDetailPage createNewOpportunityFromAccountRelatedList(String OppName,int days,String stage,String desc){
         boolean flag = false;
         while(true){
             setOpportunityFieldName(OppName);
-            setEnteringCloseDateField();
+            setEnteringCloseDateField(days);
             setEnteringStageField(stage);
             setClickingOpportunityCreationCheckbox();
             setEnteringDescriptionField(desc);
@@ -188,9 +203,9 @@ public class OpportunitiesPage {
 
     }
 
-    public ContactDetailPage createNewOpportunityFromContactRelatedList(String OppName,String stage,String desc){
+    public ContactDetailPage createNewOpportunityFromContactRelatedList(String OppName,int days,String stage,String desc){
         setOpportunityFieldName(OppName);
-        setEnteringCloseDateField();
+        setEnteringCloseDateField(days);
         setEnteringStageField(stage);
         setClickingOpportunityCreationFromContactRelatedListCheckbox();
         setEnteringDescriptionField(desc);

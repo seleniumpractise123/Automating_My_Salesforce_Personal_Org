@@ -56,7 +56,7 @@ public class ReportBuilderPage {
 
 
 
-    public void clearningColumnsValue(String ColumnFilterValue1,String ColumnFilterValue2,int bound){
+    public void clearningColumnsValue(String ColumnFilterValue1){
         System.out.println("Compiler came to clearningColumnsValue method");
         try {
             Thread.sleep(15000);
@@ -64,19 +64,20 @@ public class ReportBuilderPage {
             int columnsFilterCount = getListOfColumnsFilter().size();
             System.out.println("Value of the columnsFilterCount====>"+columnsFilterCount);
             String columnFilterText = null;
-            if(columnsFilterCount > 0){
-                System.out.println("Driver Came to if part");
-                for(int i = 0; i < columnsFilterCount-bound; i++){
-                    System.out.println("Driver Came to Loop");
+            int rowIndex = 0;
+            boolean flag = true;
+            while(flag){
+                if(columnsFilterCount > 0){
+                    System.out.println("Driver Came to while Loop");
                     List<WebElement> existingAllDealRegLeads = getListOfColumnsFilter();
-                    WebElement columnFilter1 = existingAllDealRegLeads.get(i);
+                    WebElement columnFilter1 = existingAllDealRegLeads.get(rowIndex);
                     System.out.println("Value of the columnFilter1===>"+columnFilter1);
                     columnFilterText = columnFilter1.getText().toString();
                     System.out.println("Value of the columnFilterText====>" + columnFilterText);
-                    if(columnFilterText.equals(ColumnFilterValue1) || columnFilterText.equals(ColumnFilterValue2)){
+                    if(columnFilterText.equals(ColumnFilterValue1)){
                         System.out.println("No Need to remove the column");
-                    }else{
 
+                    }else{
                         javaScriptUtil.waitForPageLoad(300);
                         By clearColumnFilter = By.xpath("//h2[text()='Columns']/ancestor::div[@class='sectionable-table-section']//div[@class='sectionable-table-group-content']/ul/li[@role='presentation']//span[@role='button' and contains(@aria-label,'Remove Column: "+columnFilterText+"')]");
                         javaScriptUtil.waitForPageLoad(300);
@@ -84,14 +85,20 @@ public class ReportBuilderPage {
                         javaScriptUtil.waitForPageLoad(40);
                     }
 
+                    rowIndex++;
+                }else{
+                    System.out.println("record count size is ZERO");
+                    flag = false;
+                    break;
                 }
-            }else{
-                System.out.println("record count size is ZERO");
             }
+
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
     public void doEnterNewColumnFieldforLeadReport(String addColumn){
         try {
@@ -304,13 +311,14 @@ public class ReportBuilderPage {
         String objectFieldFilter1 = FieldFilter1;
         String objectFieldFilterValue = filterValue;
         String objectAllFilter = allFilter;
+        int boundval = bound;
 
         try {
             if(Object.contains("Leads")){
                 javaScriptUtil.waitForPageLoad(40);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(40);
-                clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
+                //clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
                 doEnterNewColumnFieldforLeadReport(objectAddColumn1);
                 doEnterConvertedNewColumnFieldforLeadReport(objectAddColumn2);
                 clickingFilterTabBtn();
@@ -328,7 +336,7 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(250);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(250);
-                clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
+                clearningColumnsValue(objectColumnFilterValue1);
                 doEnterNewCustomerIDColumnField(objectAddColumn1);
                 clickingFilterTabBtn();
                 javaScriptUtil.waitForPageLoad(60);
@@ -343,7 +351,7 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(250);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(250);
-                clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
+                //clearningColumnsValue(objectColumnFilterValue1,objectColumnFilterValue2,bound);
                 doEnterNewCustomerIDColumnField(objectAddColumn1);
                 clickingFilterTabBtn();
                 javaScriptUtil.waitForPageLoad(60);
@@ -357,7 +365,7 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(250);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(250);
-                clearningColumnsValue(objectColumnFilterValue1, objectColumnFilterValue2, bound);
+                //clearningColumnsValue(objectColumnFilterValue1, objectColumnFilterValue2, bound);
                 doEnterNewCustomerIDColumnField(objectAddColumn1);
                 clickingFilterTabBtn();
                 javaScriptUtil.waitForPageLoad(60);
@@ -371,7 +379,7 @@ public class ReportBuilderPage {
                 javaScriptUtil.waitForPageLoad(250);
                 javaScriptUtil.clickElementByJS(updatingToggleBtn_Loc);
                 javaScriptUtil.waitForPageLoad(250);
-                clearningColumnsValue(objectColumnFilterValue1, objectColumnFilterValue2, bound);
+                //clearningColumnsValue(objectColumnFilterValue1, objectColumnFilterValue2, bound);
                 doEnterNewColumnFieldforLeadReport(objectAddColumn1);
                 doEnterNewColumnFieldforLeadReport(objectAddColumn2);
                 clickingFilterTabBtn();

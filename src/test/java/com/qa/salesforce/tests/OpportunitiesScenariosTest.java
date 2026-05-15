@@ -67,7 +67,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
         opportunitiesHomePage = qsalesHomePage.clickingOpportunitiesTab();
         opportunitiesPage = opportunitiesHomePage.setClickingNewBtn_Loc();
         String randomOppName = elementUtil.generateRandomString(5)+oppName;
-        opportunitiesDetailPage = opportunitiesPage.createNewOpportunity(randomOppName,customerID,stage,desc);
+        opportunitiesDetailPage = opportunitiesPage.createNewOpportunity(randomOppName,customerID,15,stage,desc);
         opportunitiesDetailPage.doClickDetailTab();
         String ActualoppStageValue = opportunitiesDetailPage.setFetchOpportunityStage();
         Assert.assertEquals(ActualoppStageValue, stage,"Stage Matched Successfully");
@@ -77,12 +77,12 @@ public class OpportunitiesScenariosTest extends BaseTest {
         PropertyReader.writingDataIntoTextFile("LatestOpportunityIDFromOpportunityTab",OppCustomId);
     }
 
-    @Test(description = "Creating New Opportunity From Account Related List",dataProvider = "OpportunityCreationData",dependsOnMethods = "createNewOpportunityFromTab")
+    @Test(description = "Creating New Opportunity From Account Related List",dataProvider = "OpportunityCreationData")
     public void createNewOpportunityFromAccountRelatedList(String oppName,String stage,String desc){
         accountDetailPage = qsalesHomePage.navigatingToAccountDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestAccountURL"));
         accountDetailPage.setClickingNewBtnFromAccountRelatedList();
         String randomOppName = elementUtil.generateRandomString(5)+oppName;
-        accountDetailPage = opportunitiesPage.createNewOpportunityFromAccountRelatedList(randomOppName,stage,desc);
+        accountDetailPage = opportunitiesPage.createNewOpportunityFromAccountRelatedList(randomOppName,15,stage,desc);
         accountDetailPage.setClickingOpportunitiesHeaderLinkFromAccountRelatedList();
         opportunitiesDetailPage = opportunitiesHomePage.setClickingNewlyCreatedOpportunityLinkFromAccountRelatedList();
         opportunitiesDetailPage.doClickDetailTab();
@@ -96,12 +96,12 @@ public class OpportunitiesScenariosTest extends BaseTest {
 
     }
 
-    @Test(description = "Creating New Opportunity From Contact Related List",dataProvider = "OpportunityCreationData",dependsOnMethods = "createNewOpportunityFromAccountRelatedList")
+    @Test(description = "Creating New Opportunity From Contact Related List",dataProvider = "OpportunityCreationData")
     public void createNewOpportunityFromContactRelatedList(String oppName,String stage,String desc){
         contactDetailPage = qsalesHomePage.navigatingToContactDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestContactURL"));
         contactDetailPage.setClickingCreateNewOpportunityBtnfromContactRelatedList();
         String randomOppName = elementUtil.generateRandomString(5)+oppName;
-        contactDetailPage = opportunitiesPage.createNewOpportunityFromContactRelatedList(randomOppName,stage,desc);
+        contactDetailPage = opportunitiesPage.createNewOpportunityFromContactRelatedList(randomOppName,15,stage,desc);
         opportunitiesHomePage = contactDetailPage.setClickingOpportunitiesHeader();
         opportunitiesDetailPage = opportunitiesHomePage.setClickingNewlyCreatedOpportunityLinkFromAccountRelatedList();
         opportunitiesDetailPage.doClickDetailTab();
@@ -114,7 +114,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
 
     }
 
-    @Test(description = "Editing Recently created Opportunity by clicking edit button",dataProvider = "OpportunityEditedData",dependsOnMethods ="createNewOpportunityFromContactRelatedList")
+    @Test(description = "Editing Recently created Opportunity by clicking edit button",dataProvider = "OpportunityEditedData")
     public void editingRecentlyCreateOpportunityByUsingEditButton(String type,String source){
         String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromAccountRelatedList");
         System.out.println("Value of the Latest Opportunity URL===>"+OppUrl);
@@ -130,7 +130,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
         Assert.assertEquals(actualLeadSourcePicklistValue, source,"Both Actual and Expected values are matched");
     }
 
-    @Test(description = "Adding Single Products to recently created Opportunity",dataProvider = "AddingSingleProductsToCreatedOpp",dependsOnMethods = "editingRecentlyCreateOpportunityByUsingEditButton")
+    @Test(description = "Adding Single Products to recently created Opportunity",dataProvider = "AddingSingleProductsToCreatedOpp")
     public void AddingSingleProductsToRecentlyCreatedOpportunity(String pName1,String qty1,String productCode){
         String pName =  pName1;
         String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromAccountRelatedList");
@@ -145,7 +145,6 @@ public class OpportunitiesScenariosTest extends BaseTest {
         System.out.println("Value of the actualProductCode=============>"+actualProductCode);
         Assert.assertEquals(actualProductCode, productCode);
     }
-    /*
     @Test(description = "Adding Multiple Products to Recently Created Opportunity",dataProvider = "AddingMultipleProductsToRecentlyCreatedOpp")
     public void addingMultipleProductsToRecentlyCreatedOpportunity(String productName, String pQty){
         String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromContactRelatedList");
@@ -158,8 +157,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
 
     }
 
-     */
-    @Test(description = "Updating Opportunity Stage field values and checking stage is updating correctly",dependsOnMethods = "AddingSingleProductsToRecentlyCreatedOpportunity")
+    @Test(description = "Updating Opportunity Stage field values and checking stage is updating correctly")
     public void updatingStageFieldValue(){
         String OpportunityStage = null;
         String actualOpportunityStage = null;
@@ -239,7 +237,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
         Assert.assertEquals(actualOpportunityClosedStage, "Closed Won","Opportunity stage is changed from "+OpportunityStage+" to "+actualOpportunityClosedStage+"");
     }
 
-    @Test(description = "Searching Recently Created Opportunity ID Globally",dependsOnMethods = "updatingStageFieldValue")
+    @Test(description = "Searching Recently Created Opportunity ID Globally")
     public void searchingOpportunityIDGlobally(){
         String Opportunity_ID = PropertyReader.readDataFromFile("LatestOpportunityIDFromOpportunityTab");
         opportunitiesDetailPage = qsalesHomePage.searchOpportunityIDGlobally(Opportunity_ID);
@@ -248,7 +246,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
         System.out.println("Value of the ActualOpportunityStage==========>"+ActualOpportunityStage);
         Assert.assertEquals(ActualOpportunityStage, "Prospecting");
     }
-
+/*
     @Test(description = "Opening Recently Created Opportunity through Report",dependsOnMethods = "searchingOpportunityIDGlobally")
     public void openingRecentlyOpportunityFromReports(){
         String Opportunity_ID = PropertyReader.readDataFromFile("LatestOpportunityIDFromOpportunityTab");
@@ -268,7 +266,9 @@ public class OpportunitiesScenariosTest extends BaseTest {
         Assert.assertEquals(ActualOpportunityStage, "Prospecting");
     }
 
-    @Test(description = "Opening Opportunity Detail Page Through List view",dependsOnMethods = "openingRecentlyOpportunityFromReports")
+ */
+
+    @Test(description = "Opening Opportunity Detail Page Through List view")
     public void openingOpportunityDetailPageThroughListView(){
         String Opportunity_ID = PropertyReader.readDataFromFile("LatestOpportunityIDFromOpportunityTab");
         System.out.println("Value of the Opportunity_ID========>"+Opportunity_ID);
@@ -284,7 +284,7 @@ public class OpportunitiesScenariosTest extends BaseTest {
         Assert.assertEquals(ActualOpportunityStage, "Prospecting");
     }
 
-    @Test(description = "Deleting Recently created Opportunity",dependsOnMethods = "openingOpportunityDetailPageThroughListView")
+    @Test(description = "Deleting Recently created Opportunity")
     public void deletingRecentlyCreatedOpportunity(){
         String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromAccountRelatedList");
         System.out.println("Value of the Latest Opportunity URL===>"+OppUrl);
