@@ -104,7 +104,7 @@ public class ProductsHomePage {
             opportunitiesDetailPage.setClickingAddProductBtnOnOpportunityRelatedList();
             addingMultipleProducts(products);
             clickOnNextButtonOnProductAddPage();
-            doClickAndEnterQtyToMultipleProducts(quantity);
+            doClickAndEnterQtyToMultipleProducts(products,quantity);
             //doClickAndEnterQtyToMultipleProducts(quantity);
             doClickSaveBtn();
         } catch (InterruptedException e) {
@@ -165,13 +165,16 @@ public class ProductsHomePage {
         }
     }
 
-    public void doClickAndEnterQtyToMultipleProducts(String pQty){
+    public void doClickAndEnterQtyToMultipleProducts(String products,String pQty){
 
+            String[] productArray = products.split(",");
+            String[] quantityArray = pQty.split(",");
+            //String[] quantityArray = pQty.split(",");
         try {
             //driver.navigate().refresh();
             Thread.sleep(10000);
             javaScriptUtil.waitForPageLoad(150);
-
+            /*
             int recordCount = getListOfProducts().size();
             System.out.println("Value of the recordCount===========>"+recordCount);
             for(int i=0; i < recordCount;i++){
@@ -181,7 +184,7 @@ public class ProductsHomePage {
                 System.out.println("Value of the productQtyBtn name=========>"+productQtyBtnEle.getText().toString());
                 actions.moveToElement(productQtyBtnEle).click().build().perform();
                 }
-            String[] quantityArray = pQty.split(",");
+
             for(int j = 0; j < quantityArray.length; j++) {
                 System.out.println("Value of the quantityArray[i].====>" + quantityArray[j]);
                 addingQtyToMultipleProducts(quantityArray[j].trim());
@@ -189,13 +192,21 @@ public class ProductsHomePage {
             //opportunitiesDetailPage.setSetClickingOpportunityRelatedListTab();
             //opportunitiesDetailPage.setClickingAddProductBtnOnOpportunityRelatedList();
             /*
-            String[] quantityArray = pQty.split(",");
+
             for (int j = 0; j < quantityArray.length; j++) {
                 System.out.println("Value of the quantityArray[i].====>"+quantityArray[j]);
                 addingQtyToMultipleProducts(quantityArray[j].trim());
             }
 
              */
+            String productNamesWhichAreComingFromExcel = null;
+            String productQtyWhichAreComingFromExcel = null;
+            for(int i = 0; i<productArray.length;i++){
+                productNamesWhichAreComingFromExcel=productArray[i].trim();
+                productQtyWhichAreComingFromExcel = String.valueOf(quantityArray[i]);
+
+                addingQtyToMultipleProducts(productNamesWhichAreComingFromExcel,productQtyWhichAreComingFromExcel);
+            }
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -203,15 +214,18 @@ public class ProductsHomePage {
 
     }
 
-    public void addingQtyToMultipleProducts(String pQty){
-        try {
-            Thread.sleep(1000);
-            //eleUtil.waitForElementsVisible(doClickQtyFieldBtn_Loc, 150);
-            //eleUtil.doMoveToElementClick(doClickQtyFieldBtn_Loc);
-            eleUtil.doSendKeys(doEnterQtyOfProduct_Loc, pQty);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void addingQtyToMultipleProducts(String productNamesWhichAreComingFromExcel,String productQtyWhichAreComingFromExcel){
+        //Dynamic XPath for quantity textbox based on product name
+        String qtyXpath = "//h2[text()='Edit Selected Products']//ancestor::div[contains(@class,'modal-header slds')]//following-sibling::div[contains(@class,'modal-body')]//descendant::tbody//descendant::a[text()='"+productNamesWhichAreComingFromExcel+"']//ancestor::th//following-sibling::td//button";
+        WebElement qtyFieldBtnClick = driver.findElement(By.xpath(qtyXpath));
+        javaScriptUtil.drawBorder(qtyFieldBtnClick);
+        javaScriptUtil.clickElementByJSWithWebElement(qtyFieldBtnClick);
+        WebElement inputQtyField = driver.findElement(By.xpath("//label[text()='Quantity']/parent::div[@part='input-text']//input[@part='input' and @role='spinbutton']"));
+        javaScriptUtil.drawBorder(inputQtyField);
+        javaScriptUtil.clickElementByJSWithWebElement(inputQtyField);
+        inputQtyField.clear();
+        eleUtil.doActionsSendKeysWithWebElement(inputQtyField,productQtyWhichAreComingFromExcel);
+        actions.sendKeys(Keys.ENTER).build().perform();
 
     }
 }

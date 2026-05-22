@@ -255,6 +255,11 @@ public class ElementUtil {
 		act.sendKeys(getElement(locator), value).build().perform();
 	}
 
+	public void doActionsSendKeysWithWebElement(WebElement element, String value) {
+		Actions act = new Actions(driver);
+		act.moveToElement(element).sendKeys(value).build().perform();
+	}
+
 	public void doActionsClick(By locator) {
 		Actions act = new Actions(driver);
 		act.click(getElement(locator)).build().perform();
@@ -283,6 +288,11 @@ public class ElementUtil {
 	public void doMoveToElementClick(By locator) {
 		Actions act = new Actions(driver);
 		act.moveToElement(getElement(locator)).click().build().perform();
+	}
+
+	public void doMoveToElementClickWithWebElement(WebElement element) {
+		Actions act = new Actions(driver);
+		act.moveToElement(element).click().build().perform();
 	}
 
 	public void handleTwoLevelMenu(By parentMenu, By childMenu) throws InterruptedException {

@@ -69,6 +69,11 @@ public class JavaScriptUtil {
 		js.executeScript("arguments[0].click();", driver.findElement(locator));
 	}
 
+	public void clickElementByJSWithWebElement(WebElement element) {
+
+		js.executeScript("arguments[0].click();", element);
+	}
+
 	public void sendKeysUsingWithId(String id, String value) {
 		js.executeScript("document.getElementById('" + id + "').value='" + value + "'");
 		//document.getElementById('input-email').value ='tom@gmail.com'

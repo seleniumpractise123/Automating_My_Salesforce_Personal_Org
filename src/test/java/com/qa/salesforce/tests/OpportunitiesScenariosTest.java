@@ -133,7 +133,8 @@ public class OpportunitiesScenariosTest extends BaseTest {
     @Test(description = "Adding Single Products to recently created Opportunity",dataProvider = "AddingSingleProductsToCreatedOpp")
     public void AddingSingleProductsToRecentlyCreatedOpportunity(String pName1,String qty1,String productCode){
         String pName =  pName1;
-        String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromAccountRelatedList");
+        //String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromAccountRelatedList");
+        String OppUrl = PropertyReader.readDataFromFile("LatestOpportunityURLFromOpportunityTab");
         System.out.println("Value of the Latest Opportunity URL===>"+OppUrl);
         opportunitiesDetailPage = qsalesHomePage.navigatingToOpportunityDetailPageByUsingUrl(OppUrl);
         opportunitiesDetailPage.setSetClickingOpportunityRelatedListTab();
@@ -141,9 +142,17 @@ public class OpportunitiesScenariosTest extends BaseTest {
         opportunitiesDetailPage = productsHomePage.addingSingleProductsToRecentlyCreateOPP(pName1,qty1);
         opportunitiesDetailPage.setSetClickingOpportunityRelatedListTab();
         productDetailPage = opportunitiesDetailPage.clickingRecentlyCreatedProductRecord(pName);
-        String actualProductCode = productDetailPage.setFetchProductCode();
-        System.out.println("Value of the actualProductCode=============>"+actualProductCode);
-        Assert.assertEquals(actualProductCode, productCode);
+
+        boolean actualoppProductTotalPriceAndOppAmountEqualCheck = productDetailPage.fetchTotalPriceFieldValue();
+        System.out.println("Value of the actualoppProductTotalPriceAndOppAmountEqualCheck =============>"+actualoppProductTotalPriceAndOppAmountEqualCheck);
+        // Assertion
+        if (actualoppProductTotalPriceAndOppAmountEqualCheck) {
+            System.out.println("✅ PASS: Opportunity amount matches product total");
+            Assert.assertTrue(actualoppProductTotalPriceAndOppAmountEqualCheck, "Opportunity Product Total price is equal to Opportunity Amount");
+        } else {
+            System.err.println("❌ ERROR: Amount mismatch");
+            Assert.fail("Opportunity Product Total price is not equal to Opportunity Amount");
+        }
     }
     @Test(description = "Adding Multiple Products to Recently Created Opportunity",dataProvider = "AddingMultipleProductsToRecentlyCreatedOpp")
     public void addingMultipleProductsToRecentlyCreatedOpportunity(String productName, String pQty){
