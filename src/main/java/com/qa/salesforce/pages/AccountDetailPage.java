@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.security.Key;
 import java.security.KeyStore;
+import java.time.Duration;
 
 public class AccountDetailPage {
 
@@ -49,7 +50,7 @@ public class AccountDetailPage {
     private By upsellOpportunityFieldValue_Loc = By.xpath("//span[text()='Upsell Opportunity']//ancestor::div[@role='listitem']//slot[@name='outputField']/lightning-formatted-text[@slot='outputField']");
     private By activeFieldValue_Loc = By.xpath("//span[text()='Active']//ancestor::div[@role='listitem']//slot[@name='outputField']/lightning-formatted-text[@slot='outputField']");
     private By customerIdFieldValue_Loc = By.xpath("//span[text()='Customer ID']/ancestor::div[contains(@class,'slds-form-element_readonly')]//lightning-formatted-text[@slot='outputField']");
-    private By clickingDetailTabAfterReportLoc = By.xpath("//a[text()='Details']");
+    private By clickingDetailTabAfterReportLoc = By.xpath("//a[@data-tab-value='detailTab']");
     private By clickingConfirmingDeleteBtn_Loc = By.xpath("(//span[text()='Delete'])[position()=2]/parent::button[@title='Delete']");
     private By clickingNewContactBtnFromAccount_Loc = By.xpath("//div[@class='slds-align_absolute-center']//button[@name='NewContact' and @type='button']");
     private By clickingContactHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Contacts']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
@@ -61,28 +62,39 @@ public class AccountDetailPage {
 
     //Methods
     public void clickingDetailTab(){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(250);
+        try{
+            //Thread.sleep(15000);
+            eleUtil.waitForElementVisibleWithFluentWait(detailTabLoc,200,10);
+            //javaScriptUtil.waitForPageLoad(250);
             javaScriptUtil.drawBorder(driver.findElement(detailTabLoc));
             javaScriptUtil.clickElementByJS(detailTabLoc);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
+            //javaScriptUtil.waitForPageLoad(200);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
 
     }
 
     public void clickingDetailTabAfterOpeningAccountFromReport(){
         try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(250);
-            driver.navigate().refresh();
-            Thread.sleep(10000);
+            //Thread.sleep(15000);
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(35));
+            String pageTitle = driver.getTitle();
+            System.out.println("Value of the pageTitle=====>"+pageTitle);
+            for (String window : driver.getWindowHandles()) {
+                driver.switchTo().window(window);
+                if (driver.getTitle().contains("Iu3u3Test_Automation_Account")) {
+                    break;
+                }
+            }
+
+            eleUtil.waitForElementPresenceWithFluentWait(clickingDetailTabAfterReportLoc,350,10);
+            //javaScriptUtil.waitForPageLoad(250);
             javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabAfterReportLoc));
             javaScriptUtil.clickElementByJS(clickingDetailTabAfterReportLoc);
             javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -90,12 +102,13 @@ public class AccountDetailPage {
 
     public void setClickingConfirmingDeleteBtn(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingConfirmingDeleteBtn_Loc,200,10);
             javaScriptUtil.waitForPageLoad(150);
             javaScriptUtil.drawBorder(driver.findElement(clickingConfirmingDeleteBtn_Loc));
             eleUtil.doMoveToElementClick(clickingConfirmingDeleteBtn_Loc);
             javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -137,10 +150,11 @@ public class AccountDetailPage {
 
     public Accounts clickEditBtnFromMoreBtn(){
         try {
-            Thread.sleep(20000);
+            //Thread.sleep(20000);
+            eleUtil.waitForElementVisibleWithFluentWait(moreBtn_Loc,200,10);
             javaScriptUtil.waitForPageLoad(30);
             javaScriptUtil.selectingDrpDownValuesDynamically(moreBtn_Loc,"//span[text()='Edit']/parent::a[@role='menuitem']");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -149,11 +163,12 @@ public class AccountDetailPage {
 
     public Accounts clickDeleteBtnFromMoreBtn(){
         try {
-            Thread.sleep(20000);
-            javaScriptUtil.waitForPageLoad(30);
+            //Thread.sleep(20000);
+            eleUtil.waitForElementVisibleWithFluentWait(moreBtn_Loc,200,10);
+            //javaScriptUtil.waitForPageLoad(30);
             javaScriptUtil.drawBorder(driver.findElement(moreBtn_Loc));
             javaScriptUtil.selectingDrpDownValuesDynamically(moreBtn_Loc,"//span[text()='Delete']/parent::a[@role='menuitem']");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -171,12 +186,12 @@ public class AccountDetailPage {
 
     public void setClickingInlineEditBtn(){
         try {
-            Thread.sleep(15000);
-
-        javaScriptUtil.waitForPageLoad(30);
+            //Thread.sleep(15000);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingInlineEditBtn_Loc,200,10);
+        //javaScriptUtil.waitForPageLoad(30);
         javaScriptUtil.clickElementByJS(clickingInlineEditBtn_Loc);
         javaScriptUtil.waitForPageLoad(30);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -184,10 +199,11 @@ public class AccountDetailPage {
 
     public void putOwnerShipFieldValue(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(30);
+            eleUtil.waitForElementVisibleWithFluentWait(ownershipPicklist_Loc,200,10);
             javaScriptUtil.selectingDrpDownValuesDynamically(ownershipPicklist_Loc,"//span[text()='Public']");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -195,10 +211,11 @@ public class AccountDetailPage {
 
     public void putCustomerPriorityFieldValue(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(30);
+            eleUtil.waitForElementVisibleWithFluentWait(customerPriorityPicklist_Loc,200,10);
             javaScriptUtil.selectingDrpDownValuesDynamically(customerPriorityPicklist_Loc,"//span[text()='Medium']");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -206,10 +223,11 @@ public class AccountDetailPage {
 
     public void putSLAFieldValue(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(30);
+            eleUtil.waitForElementVisibleWithFluentWait(slaPicklist_Loc,200,10);
             javaScriptUtil.selectingDrpDownValuesDynamically(slaPicklist_Loc,"//span[text()='Silver']");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -217,10 +235,11 @@ public class AccountDetailPage {
 
     public void putUpsellOpportunityFieldValue(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(30);
+            eleUtil.waitForElementVisibleWithFluentWait(upsellOpportunityPicklist_Loc,200,10);
             javaScriptUtil.selectingDrpDownValuesDynamically(upsellOpportunityPicklist_Loc,"//span[text()='Maybe']");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -228,10 +247,11 @@ public class AccountDetailPage {
 
     public void putActiveFieldValue(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(30);
+            eleUtil.waitForElementVisibleWithFluentWait(activePicklist_Loc,200,10);
             javaScriptUtil.selectingDrpDownValuesDynamically(activePicklist_Loc,"(//span[text()='No'])[position()=2]");
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -314,11 +334,12 @@ public class AccountDetailPage {
 
     public Contacts clickNewContctBtnFromAccountRelatedList() {
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingNewContactBtnFromAccount_Loc,200,10);
             eleUtil.doMoveToElementClick(clickingNewContactBtnFromAccount_Loc);
             javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
 
         }
@@ -328,11 +349,12 @@ public class AccountDetailPage {
 
     public ContactsHomePage clickingContactHeaderLinkFromAccountPage(){
         try {
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingContactHeaderLinkFromAccountRelatedList_Loc,200,10);
             javaScriptUtil.drawBorder(driver.findElement(clickingContactHeaderLinkFromAccountRelatedList_Loc));
             eleUtil.doMoveToElementClick(clickingContactHeaderLinkFromAccountRelatedList_Loc);
             javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -342,12 +364,13 @@ public class AccountDetailPage {
 
     public OpportunitiesPage setClickingNewBtnFromAccountRelatedList(){
         try {
-            Thread.sleep(10000);
+            //Thread.sleep(10000);
             javaScriptUtil.waitForPageLoad(150);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingNewbuttonFromAccountRelatedList_Loc,200,10);
             javaScriptUtil.drawBorder(driver.findElement(clickingNewbuttonFromAccountRelatedList_Loc));
             javaScriptUtil.clickElementByJS(clickingNewbuttonFromAccountRelatedList_Loc);
             javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return new OpportunitiesPage(driver);
@@ -356,15 +379,16 @@ public class AccountDetailPage {
     public OpportunitiesHomePage setClickingOpportunitiesHeaderLinkFromAccountRelatedList(){
         try {
             driver.navigate().refresh();
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(300);
+            eleUtil.waitForElementVisibleWithFluentWait(ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc,200,10);
             //javaScriptUtil.drawBorder(driver.findElement(By.xpath("(//button[text()='Upcoming & Overdue'])[2]")));
             //javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("(//button[text()='Upcoming & Overdue'])[2]")));
             js.executeScript("window.scrollBy(0,1000)");
             javaScriptUtil.drawBorder(driver.findElement(ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc));
             eleUtil.doMoveToElementClick(ClickingOpportunitiesHeaderLinkFromAccountRelatedList_Loc);
             javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
        return new OpportunitiesHomePage(driver);

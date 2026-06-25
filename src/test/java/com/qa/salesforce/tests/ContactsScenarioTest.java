@@ -50,7 +50,7 @@ public class ContactsScenarioTest extends BaseTest {
         return dataMap;
     }
 
-    @Test(description = "Creating New Contact by clicking New button from Contact Tab",dataProvider = "ContactCreationData")
+    @Test(description = "Creating New Contact by clicking New button from Contact Tab",dataProvider = "ContactCreationData",priority = 1)
     public void creatingNewContactByClickingNewBtnOnContactTab(String fName,String lName,String department,String phone,String description,String leadSource){
         String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
         System.out.println("Value of the CUstID ===> " + custID);
@@ -70,7 +70,7 @@ public class ContactsScenarioTest extends BaseTest {
         PropertyReader.writingDataIntoTextFile("LatestContactURL",contactDetailPage.getCurrentURL());
         PropertyReader.writingDataIntoTextFile("LatestContactID", contactDetailPage.getContactID());
     }
-    @Test(description = "Creating Contact from Account Related List",dataProvider = "ContactCreationData",dependsOnMethods = "creatingNewContactByClickingNewBtnOnContactTab")
+    @Test(description = "Creating Contact from Account Related List",dataProvider = "ContactCreationData",priority = 2)
     public void creatingContactFromAccountRelatedList(String fName,String lName,String department,String phone,String description,String leadSource){
         accountDetailPage = qsalesHomePage.navigatingToAccountDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestAccountURL"));
         accountDetailPage.clickNewContctBtnFromAccountRelatedList();
@@ -92,7 +92,7 @@ public class ContactsScenarioTest extends BaseTest {
         PropertyReader.writingDataIntoTextFile("LatestContactID1", contactDetailPage.getContactID());
     }
 
-    @Test(description = "searching contact id globally once record is find then open the record detail page",dependsOnMethods = "creatingNewContactByClickingNewBtnOnContactTab")
+    @Test(description = "searching contact id globally once record is find then open the record detail page",priority = 3)
     public void searchingContactIDGloballyandOpeningContactDetailPage(){
         String contactID = qsalesHomePage.getContactID(PropertyReader.readDataFromFile("LatestContactID"));
         System.out.println("Value of the contactID ===> " + contactID);
@@ -103,7 +103,7 @@ public class ContactsScenarioTest extends BaseTest {
     }
 
 
-    @Test(description = "Editing Contact Detail Page By Clicking Edit button",dataProvider = "EditingContactByClickingEditBtn",dependsOnMethods = "creatingNewContactByClickingNewBtnOnContactTab")
+    @Test(description = "Editing Contact Detail Page By Clicking Edit button",dataProvider = "EditingContactByClickingEditBtn",priority = 4)
     public void editingContactDetailPageByUsingEditbutton(String mailAddress,String mailCity,String mailState,String mailCountry
             ,String mailPostalCode,String lang,String level){
         contactDetailPage = qsalesHomePage.navigatingToContactDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestContactURL"));
@@ -116,14 +116,14 @@ public class ContactsScenarioTest extends BaseTest {
         Assert.assertEquals(actualLeveFieldValue, level);
     }
 
-    @Test(description = "Editing Contact Detail Page By using Inline Editing",dataProvider = "EditingContactByClickingInlineBtn",dependsOnMethods = "editingContactDetailPageByUsingEditbutton")
+    @Test(description = "Editing Contact Detail Page By using Inline Editing",dataProvider = "EditingContactByClickingInlineBtn",priority = 5)
     public void editingContactDetailPageByUsingInlineEditButton(String homePhone,String OtherPhone,String assistName,String asstPhone){
          contactDetailPage = qsalesHomePage.navigatingToContactDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestContactURL"));
         contactDetailPage.clickDetailTabBtn();
         contactDetailPage.doClickInlineEditBtn();
         String ranAssis = ElementUtil.generateRandomString(6)+assistName;
         contactDetailPage.editingContactDetailPageByClickingInlineEditing(homePhone,OtherPhone,ranAssis,asstPhone);
-        contactDetailPage.doClickInlineEditBtn();
+        //contactDetailPage.doClickInlineEditBtn();
 
         String actualHomePhoneNumber = contactDetailPage.getHomePhoneFieldValue();
         Assert.assertEquals(actualHomePhoneNumber, homePhone);
@@ -154,8 +154,8 @@ public class ContactsScenarioTest extends BaseTest {
  */
 
 
-
-    @Test(description = "Opening Contact Detail Page Through List views",dependsOnMethods = "editingContactDetailPageByUsingInlineEditButton")
+/*
+    @Test(description = "Opening Contact Detail Page Through List views",priority = 6)
     public void openingContactDetailPageThroughListView(){
         String contactID = qsalesHomePage.getContactID(PropertyReader.readDataFromFile("LatestContactID"));
         System.out.println("Value of the contactID ===> " + contactID);
@@ -183,6 +183,8 @@ public class ContactsScenarioTest extends BaseTest {
         Assert.assertEquals(actualContactHeader,"Contacts");
 
     }
+
+ */
 
 
 

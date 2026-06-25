@@ -47,80 +47,56 @@ public class ContactDetailPage {
     private By ClickingCasesHeaderLinkFromAccountRelatedList_Loc = By.xpath("//article[@aria-label='Cases']//div[contains(@class,'firstHeaderRow')]//h2[@class='slds-card__header-title']/a");
 
     public void clickDetailTabBtn(){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(200);
-            javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabOnContact_Loc));
-            //eleUtil.doMoveToElementClick(clickingDetailTabOnContact_Loc);
-            javaScriptUtil.clickElementByJS(clickingDetailTabOnContact_Loc);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        //Thread.sleep(15000);
+        javaScriptUtil.waitForPageLoad(200);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingDetailTabOnContact_Loc, 150, 10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabOnContact_Loc));
+        //eleUtil.doMoveToElementClick(clickingDetailTabOnContact_Loc);
+        javaScriptUtil.clickElementByJS(clickingDetailTabOnContact_Loc);
+        javaScriptUtil.waitForPageLoad(200);
     }
 
     public void clickDetailTabBtnThroughReports(){
-        try {
-            Thread.sleep(15000);
-            driver.navigate().refresh();
-            Thread.sleep(10000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabThroughReport_Loc));
-            eleUtil.doMoveToElementClick(clickingDetailTabThroughReport_Loc);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        driver.navigate().refresh();
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingDetailTabThroughReport_Loc, 150, 10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabThroughReport_Loc));
+        eleUtil.doMoveToElementClick(clickingDetailTabThroughReport_Loc);
+        javaScriptUtil.waitForPageLoad(200);
     }
 
     public void clickDetailTabBtnWhichCameFromAccounts(){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabOnContact_Loc));
-            //eleUtil.doMoveToElementClick(clickingDetailTabOnContact_Loc);
-            javaScriptUtil.clickElementByJS(clickingDetailTabOnContact_Loc);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingDetailTabOnContact_Loc, 150, 10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingDetailTabOnContact_Loc));
+        //eleUtil.doMoveToElementClick(clickingDetailTabOnContact_Loc);
+        javaScriptUtil.clickElementByJS(clickingDetailTabOnContact_Loc);
+        javaScriptUtil.waitForPageLoad(200);
     }
 
     public String getLeadSourceFieldValue(){
         String leadSourceFieldValue = null;
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            leadSourceFieldValue = eleUtil.doGetElementText(fetchLeadSourceField_Loc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(fetchLeadSourceField_Loc, 150, 10);
+        leadSourceFieldValue = eleUtil.doGetElementText(fetchLeadSourceField_Loc);
         return leadSourceFieldValue;
     }
 
     public String getDepartmentFieldValue(){
         String departmentFieldValue = null;
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            departmentFieldValue = eleUtil.doGetElementText(fetchDepartmentField_Loc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(fetchDepartmentField_Loc, 150, 10);
+        departmentFieldValue = eleUtil.doGetElementText(fetchDepartmentField_Loc);
         return departmentFieldValue;
     }
 
     public String getHomePhoneFieldValue(){
         String finalHomePhoneFieldValue = null;
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            String homePhoneFieldValue = eleUtil.doGetElementText(fetchHomePhoneFieldValue_Loc);
-            finalHomePhoneFieldValue = homePhoneFieldValue.replaceAll("[^0-9]", "");
-            System.out.println("Value of the finalHomePhoneFieldValue====>" + finalHomePhoneFieldValue);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(fetchHomePhoneFieldValue_Loc, 200, 10);
+        String homePhoneFieldValue = eleUtil.doGetElementText(fetchHomePhoneFieldValue_Loc);
+        finalHomePhoneFieldValue = homePhoneFieldValue.replaceAll("[^0-9]", "");
+        System.out.println("Value of the finalHomePhoneFieldValue====>" + finalHomePhoneFieldValue);
         return finalHomePhoneFieldValue;
     }
 
@@ -133,44 +109,32 @@ public class ContactDetailPage {
 
     public String getContactID(){
         String finalContactID = null;
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            finalContactID = eleUtil.doGetElementText(contactIDFieldValue_Loc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(contactIDFieldValue_Loc, 150, 10);
+        finalContactID = eleUtil.doGetElementText(contactIDFieldValue_Loc);
         return finalContactID;
     }
 
     public Contacts clickEditBtnFromMoreBtn(){
-        try {
-            Thread.sleep(20000);
-            javaScriptUtil.waitForPageLoad(30);
-            javaScriptUtil.selectingDrpDownValuesDynamically(moreBtn_Loc,"//span[text()='Edit']/parent::a[@role='menuitem']");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(30);
+        eleUtil.waitForElementVisibleWithFluentWait(moreBtn_Loc, 200, 10);
+        javaScriptUtil.selectingDrpDownValuesDynamically(moreBtn_Loc,"//span[text()='Edit']/parent::a[@role='menuitem']");
 
         return new Contacts(driver);
     }
 
     public String getLevelFieldValue(){
         String levelFieldValue = null;
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            levelFieldValue = eleUtil.doGetElementText(fetchLevlField_Loc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(fetchLevlField_Loc, 200, 10);
+        levelFieldValue = eleUtil.doGetElementText(fetchLevlField_Loc);
         return levelFieldValue;
     }
 
     public void doClickInlineEditBtn(){
         try {
-            Thread.sleep(15000);
             javaScriptUtil.waitForPageLoad(150);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingInlineEditBtn_Loc, 200, 10);
             eleUtil.doMoveToElementClick(clickingInlineEditBtn_Loc);
             Thread.sleep(150);
         } catch (InterruptedException e) {
@@ -179,58 +143,38 @@ public class ContactDetailPage {
     }
 
     public void doEnterHomePhoneFieldValue(String homePhone){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringHomePhoneFieldValue_Loc,homePhone);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringHomePhoneFieldValue_Loc, 200, 10);
+        eleUtil.doSendKeys(enteringHomePhoneFieldValue_Loc,homePhone);
+        javaScriptUtil.waitForPageLoad(150);
     }
 
     public void doEnterOtherPhoneFieldValue(String otherPhone){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringOtherPhoneFieldValue_Loc,otherPhone);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringOtherPhoneFieldValue_Loc, 200, 10);
+        eleUtil.doSendKeys(enteringOtherPhoneFieldValue_Loc,otherPhone);
+        javaScriptUtil.waitForPageLoad(150);
     }
 
     public void doEnterAssistantNameFieldValue(String assistantName){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringAssistantNameFieldValue_Loc,assistantName);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringAssistantNameFieldValue_Loc, 200, 10);
+        eleUtil.doSendKeys(enteringAssistantNameFieldValue_Loc,assistantName);
+        javaScriptUtil.waitForPageLoad(150);
     }
 
     public void doEnterAssistantPhoneFieldValue(String assistantPhone){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringAssistPhoneFieldValue_Loc,assistantPhone);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringAssistPhoneFieldValue_Loc, 200, 10);
+        eleUtil.doSendKeys(enteringAssistPhoneFieldValue_Loc,assistantPhone);
+        javaScriptUtil.waitForPageLoad(150);
     }
 
     public void doClickSaveBtnOnDetailPage(){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doMoveToElementClick(clickingSaveBtnOnDetailPage_Loc);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingSaveBtnOnDetailPage_Loc, 200, 10);
+        eleUtil.doMoveToElementClick(clickingSaveBtnOnDetailPage_Loc);
+        javaScriptUtil.waitForPageLoad(150);
     }
 
     public void editingContactDetailPageByClickingInlineEditing(String homePhone,String otherPhone,String assistantName,String assistantPhone){
@@ -250,29 +194,21 @@ public class ContactDetailPage {
     }
 
     public Accounts clickDeleteBtnFromMoreBtn(){
-        try {
-            Thread.sleep(20000);
-            javaScriptUtil.waitForPageLoad(30);
-            javaScriptUtil.drawBorder(driver.findElement(moreBtn_Loc));
-            javaScriptUtil.selectingDrpDownValuesDynamically(moreBtn_Loc,"//span[text()='Delete']/parent::a[@role='menuitem']");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(30);
+        eleUtil.waitForElementVisibleWithFluentWait(moreBtn_Loc, 150, 10);
+        javaScriptUtil.drawBorder(driver.findElement(moreBtn_Loc));
+        javaScriptUtil.selectingDrpDownValuesDynamically(moreBtn_Loc,"//span[text()='Delete']/parent::a[@role='menuitem']");
 
         return new Accounts(driver);
     }
 
 
     public ContactsHomePage setClickingConfirmingDeleteBtn(){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.drawBorder(driver.findElement(clickingConfirmingDeleteBtn_Loc));
-            eleUtil.doMoveToElementClick(clickingConfirmingDeleteBtn_Loc);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingConfirmingDeleteBtn_Loc, 150, 10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingConfirmingDeleteBtn_Loc));
+        eleUtil.doMoveToElementClick(clickingConfirmingDeleteBtn_Loc);
+        javaScriptUtil.waitForPageLoad(200);
 
         return new ContactsHomePage(driver);
     }
@@ -287,55 +223,38 @@ public class ContactDetailPage {
     }
 
     public  OpportunitiesPage setClickingCreateNewOpportunityBtnfromContactRelatedList(){
-        try {
-            Thread.sleep(10000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doMoveToElementClick(clickingCreateNewOpportunityBtnfromContactRelatedList_Loc);
-            javaScriptUtil.waitForPageLoad(250);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingCreateNewOpportunityBtnfromContactRelatedList_Loc, 100, 10);
+        eleUtil.doMoveToElementClick(clickingCreateNewOpportunityBtnfromContactRelatedList_Loc);
+        javaScriptUtil.waitForPageLoad(250);
 
-     return new OpportunitiesPage(driver);
+        return new OpportunitiesPage(driver);
     }
 
     public OpportunitiesHomePage setClickingOpportunitiesHeader(){
-        try {
-            Thread.sleep(10000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doMoveToElementClick(clickingOpportunitiesHeader_Loc);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingOpportunitiesHeader_Loc, 100, 10);
+        eleUtil.doMoveToElementClick(clickingOpportunitiesHeader_Loc);
+        javaScriptUtil.waitForPageLoad(150);
 
         return new OpportunitiesHomePage(driver);
     }
 
     public Cases doClickingNewCaseCreationBtn(){
-        try {
-            Thread.sleep(10000);
-            javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
-            eleUtil.waitForElementsVisible(clickingNewCaseCreationBtnFromAccountRelatedList_Loc, 200);
-            eleUtil.doMoveToElementClick(clickingNewCaseCreationBtnFromAccountRelatedList_Loc);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
+        eleUtil.waitForElementVisibleWithFluentWait(clickingNewCaseCreationBtnFromAccountRelatedList_Loc, 100, 10);
+        eleUtil.waitForElementsVisible(clickingNewCaseCreationBtnFromAccountRelatedList_Loc, 200);
+        eleUtil.doMoveToElementClick(clickingNewCaseCreationBtnFromAccountRelatedList_Loc);
+        javaScriptUtil.waitForPageLoad(150);
 
         return new Cases(driver);
     }
 
     public CasesHomePage doClickingCasesHeaderFromContactRelatedList(){
-        try {
-            Thread.sleep(10000);
-            javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
-            eleUtil.waitForElementVisible(ClickingCasesHeaderLinkFromAccountRelatedList_Loc, 200);
-            eleUtil.doMoveToElementClick(ClickingCasesHeaderLinkFromAccountRelatedList_Loc);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.scrollIntoView(driver.findElement(By.xpath("//button[text()='Show All Activities']")));
+        eleUtil.waitForElementVisibleWithFluentWait(ClickingCasesHeaderLinkFromAccountRelatedList_Loc, 100, 10);
+        eleUtil.doMoveToElementClick(ClickingCasesHeaderLinkFromAccountRelatedList_Loc);
+        javaScriptUtil.waitForPageLoad(150);
 
         return new CasesHomePage(driver);
 

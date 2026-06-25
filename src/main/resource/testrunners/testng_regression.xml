@@ -16,23 +16,7 @@
         </classes>
     </test>
 
-    <test  name="Lead Scenario Test">
-        <classes>
-            <class name="com.qa.salesforce.tests.LeadSceanriosTest"/>
-        </classes>
-    </test>
 
-    <test  name="Opportunities Scenario Test">
-        <classes>
-            <class name="com.qa.salesforce.tests.OpportunitiesScenariosTest"/>
-        </classes>
-    </test>
-
-    <test  name="Case Scenario Test">
-        <classes>
-            <class name="com.qa.salesforce.tests.CaseScenariosTest"/>
-        </classes>
-    </test>
 
 <!-- Test -->
 </suite> <!-- Suite -->

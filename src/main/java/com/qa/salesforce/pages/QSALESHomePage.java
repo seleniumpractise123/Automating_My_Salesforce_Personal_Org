@@ -51,7 +51,8 @@ public class QSALESHomePage {
         System.out.println("Compiler came to clickingAccountsTab method");
         try {
             driver.navigate().refresh();
-            Thread.sleep(15000);
+            //Thread.sleep(15000);
+            eleUtil.waitForElementVisibleWithFluentWait(AccountTabLoc,200,10);
             //javaScriptUtil.waitForPageLoad(20);
             javaScriptUtil.clickElementByJS(AccountTabLoc);
             Thread.sleep(10000);
@@ -71,8 +72,9 @@ public class QSALESHomePage {
         System.out.println("Value of the acurl URL====> " + acurl);
         driver.get(acurl);
         try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
+            //Thread.sleep(15000);
+            javaScriptUtil.waitForPageLoad(150);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return new AccountDetailPage(driver);

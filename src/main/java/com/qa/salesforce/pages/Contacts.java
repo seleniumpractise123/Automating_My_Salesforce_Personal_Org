@@ -51,121 +51,81 @@ public class Contacts {
 
 
     public void setFirstNameFieldValue(String fName){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(firstName_Loc,fName);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(firstName_Loc, 100, 10);
+        eleUtil.doSendKeys(firstName_Loc,fName);
     }
 
     public void setLastNameFieldValue(String lName){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(lastName_Loc,lName);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(lastName_Loc, 100, 10);
+        eleUtil.doSendKeys(lastName_Loc,lName);
     }
 
     public void setAccountNameFieldValue(String custID){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.drawBorder(driver.findElement(accountName_Loc));
-            eleUtil.doClick(accountName_Loc);
-            eleUtil.doSendKeys(accountName_Loc,custID);
-            actions.moveToElement(driver.findElement(accountName_Loc)).sendKeys(Keys.ENTER).build().perform();
-            Thread.sleep(10000);
-            javaScriptUtil.drawBorder(driver.findElement(clickingSearchIcon));
-            eleUtil.doClick(clickingSearchIcon);
-            Thread.sleep(10000);
-            javaScriptUtil.drawBorder(driver.findElement(selectingAccountValue_loc));
-            javaScriptUtil.clickElementByJS(selectingAccountValue_loc);
-            Thread.sleep(10000);
-            javaScriptUtil.drawBorder(driver.findElement(clickingSelectBtnOnLookupPage_Loc));
-            javaScriptUtil.clickElementByJS(clickingSelectBtnOnLookupPage_Loc);
-            //eleUtil.doMoveToElementClick(clickingSelectBtnOnLookupPage_Loc);
-            //eleUtil.doClick(clickingSelectBtnOnLookupPage_Loc);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(accountName_Loc, 100, 10);
+        javaScriptUtil.drawBorder(driver.findElement(accountName_Loc));
+        eleUtil.doClick(accountName_Loc);
+        eleUtil.doSendKeys(accountName_Loc,custID);
+        actions.moveToElement(driver.findElement(accountName_Loc)).sendKeys(Keys.ENTER).build().perform();
+        eleUtil.waitForElementVisibleWithFluentWait(clickingSearchIcon, 100, 10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingSearchIcon));
+        eleUtil.doClick(clickingSearchIcon);
+        eleUtil.waitForElementVisibleWithFluentWait(selectingAccountValue_loc, 100, 10);
+        javaScriptUtil.drawBorder(driver.findElement(selectingAccountValue_loc));
+        javaScriptUtil.clickElementByJS(selectingAccountValue_loc);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingSelectBtnOnLookupPage_Loc, 100, 10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingSelectBtnOnLookupPage_Loc));
+        javaScriptUtil.clickElementByJS(clickingSelectBtnOnLookupPage_Loc);
+        //eleUtil.doMoveToElementClick(clickingSelectBtnOnLookupPage_Loc);
+        //eleUtil.doClick(clickingSelectBtnOnLookupPage_Loc);
+        javaScriptUtil.waitForPageLoad(150);
     }
 
 
 
     public void setDepartmentFieldValue(String depart){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(departmentField_Loc,depart);
-            //actions.moveToElement(driver.findElement(departmentField_Loc)).sendKeys(depart).build().perform();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(departmentField_Loc, 100, 10);
+        eleUtil.doSendKeys(departmentField_Loc,depart);
+        //actions.moveToElement(driver.findElement(departmentField_Loc)).sendKeys(depart).build().perform();
     }
 
     public void setPhoneFieldValue(String phone){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(phoneField_Loc,phone);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(phoneField_Loc, 100, 10);
+        eleUtil.doSendKeys(phoneField_Loc,phone);
     }
 
     public void setMobilePhoneFieldValue(String phone){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(mobilePhoneField_Loc,phone);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(mobilePhoneField_Loc, 100, 10);
+        eleUtil.doSendKeys(mobilePhoneField_Loc,phone);
     }
 
     public void setEMailFieldValue(String fName,String lName){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            String emailId = fName+lName+"@gmail.com";
-            eleUtil.doSendKeys(emailField_Loc,emailId);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(emailField_Loc,150,10);
+        String emailId = fName+lName+"@gmail.com";
+        eleUtil.doSendKeys(emailField_Loc,emailId);
     }
 
     public void setDescriptionFieldValue(String desc){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringDescriptionField_Loc,desc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringDescriptionField_Loc,150,10);
+        eleUtil.doSendKeys(enteringDescriptionField_Loc,desc);
     }
 
     public void setLeadSourceFieldValue(String source){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.selectingDrpDownValuesDynamically(clickingLeadSourceField_Loc, "//span[text()='"+source+"']");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingLeadSourceField_Loc,150,10);
+        javaScriptUtil.selectingDrpDownValuesDynamically(clickingLeadSourceField_Loc, "//span[text()='"+source+"']");
     }
 
     public void doClickingSaveBtnOnCreationPage(){
-        try {
-            Thread.sleep(15000);
-            eleUtil.doClick(clickingSaveBtnOnContactCretionPage_Loc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        eleUtil.waitForElementVisibleWithFluentWait(clickingSaveBtnOnContactCretionPage_Loc,150,10);
+        eleUtil.doClick(clickingSaveBtnOnContactCretionPage_Loc);
     }
 
 
@@ -219,73 +179,46 @@ public class Contacts {
     }
 
     public void doEnterMailingAddress(String mailAddress){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringmailingaddress_Loc,mailAddress);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringmailingaddress_Loc,150,10);
+        eleUtil.doSendKeys(enteringmailingaddress_Loc,mailAddress);
     }
 
     public void doEnterMailingCity(String mailCity){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringmailingCity_Loc,mailCity);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringmailingCity_Loc,150,10);
+        eleUtil.doSendKeys(enteringmailingCity_Loc,mailCity);
     }
 
     public void doEnterMailingState(String mailState){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringMailingState_Loc,mailState);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringMailingState_Loc,150,10);
+        eleUtil.doSendKeys(enteringMailingState_Loc,mailState);
     }
 
     public void doEnterMailingCountry(String mailCountry){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringmailingcountry_Loc,mailCountry);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringmailingcountry_Loc,150,10);
+        eleUtil.doSendKeys(enteringmailingcountry_Loc,mailCountry);
     }
 
     public void doEnterMailingPostalCode(String mailPostalCode){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringmailingpostalcode_Loc,mailPostalCode);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringmailingpostalcode_Loc,150,10);
+        eleUtil.doSendKeys(enteringmailingpostalcode_Loc,mailPostalCode);
     }
 
     public void doEnterLanguageFieldValue(String lang){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doSendKeys(enteringLanguageField_Loc,lang);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(enteringLanguageField_Loc,150,10);
+        eleUtil.doSendKeys(enteringLanguageField_Loc,lang);
     }
 
     public void setLeavlFieldValue(String level){
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.selectingDrpDownValuesDynamically(clickingLevelFieldBtn_Loc, "//span[text()='"+level+"']");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("Value of the Level=====>"+level);
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingLevelFieldBtn_Loc,150,10);
+        javaScriptUtil.selectingDrpDownValuesDynamically(clickingLevelFieldBtn_Loc, "//span[text()='"+level+"']");
     }
 
     public ContactDetailPage doClickingEditButtonOnContactDetailPage(String mailAddress,String mailCity,String mailState,String mailCountry

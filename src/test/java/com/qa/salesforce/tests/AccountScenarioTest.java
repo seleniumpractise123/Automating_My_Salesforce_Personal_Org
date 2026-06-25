@@ -49,7 +49,7 @@ public class AccountScenarioTest extends BaseTest {
         return dataMap;
     }
 
-    @Test(description = "Creating New Account in My Personal Salesforce Org", dataProvider = "AccCreationData")
+    @Test(description = "Creating New Account in My Personal Salesforce Org", dataProvider = "AccCreationData",priority = 1)
     void Creating_New_Account(String accName,String accNumber,String description,String sStreet,
                               String sState,String sCity, String sCounty,String sPostalCode){
 
@@ -84,8 +84,7 @@ public class AccountScenarioTest extends BaseTest {
 
     }
 
-    @Test(description = "Editing Recently created Account record By clicking Edit button", dataProvider = "AccDataForEdit",dependsOnMethods = "Creating_New_Account")
-    public void editingAccountPageByClickingEditButton(String bStreet,
+    @Test(description = "Editing Recently created Account record By clicking Edit button", dataProvider = "AccDataForEdit",priority = 2)   public void editingAccountPageByClickingEditButton(String bStreet,
                                                        String bState,String bCity, String bCounty,String bPostalCode){
 
       accountDetailPage = qsalesHomePage.navigatingToAccountDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestAccountURL"));
@@ -94,7 +93,7 @@ public class AccountScenarioTest extends BaseTest {
       //
     }
 
-    @Test(description = "Editing Account through Inline Editor", dataProvider = "AccDataForInlineEdit",dependsOnMethods = "editingAccountPageByClickingEditButton")
+    @Test(description = "Editing Account through Inline Editor", dataProvider = "AccDataForInlineEdit",priority = 3)
     public void editingAccountPageByClickingInlineEditing(String slaNumber,String nLocations){
         accountDetailPage = qsalesHomePage.navigatingToAccountDetailPageByUsingUrl(PropertyReader.readDataFromFile("LatestAccountURL"));
         accountDetailPage.clickingDetailTab();
@@ -117,7 +116,7 @@ public class AccountScenarioTest extends BaseTest {
         Assert.assertEquals(ActualActiveFieldValue,"No");
     }
 
-    @Test(description = "Searching recently created Account globally by using customer ID",dependsOnMethods = "editingAccountPageByClickingInlineEditing")
+    @Test(description = "Searching recently created Account globally by using customer ID",priority = 4)
     public void searchingAccountCustomerIDThroguhGlobalSearch(){
         String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
         System.out.println("Value of the CUstID ===> " + custID);
@@ -130,7 +129,7 @@ public class AccountScenarioTest extends BaseTest {
 
     }
 
-    @Test(description = "Searching recently created Account though List view using customer ID",dependsOnMethods = "searchingAccountCustomerIDThroguhGlobalSearch")
+    @Test(description = "Searching recently created Account though List view using customer ID",priority = 5)
     public void searchingAccountCustomerIDThroughListView(){
         String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
         System.out.println("Value of the CUstID ===> " + custID);
@@ -150,7 +149,7 @@ public class AccountScenarioTest extends BaseTest {
         Assert.assertEquals(ActualTypeFieldValue,"Customer - Direct");
     }
 
-    @Test(description = "Fetching Customer Id through Reports and Opening Account Detail Page")
+    @Test(description = "Fetching Customer Id through Reports and Opening Account Detail Page",priority = 6)
     public void openingAccountDetailPageThroughReports(){
         String custID = qsalesHomePage.getCustID(PropertyReader.readDataFromFile("LatestCustomerID"));
         System.out.println("Value of the CUstID ===> " + custID);
@@ -160,13 +159,13 @@ public class AccountScenarioTest extends BaseTest {
         reportsHomePage = qsalesHomePage.clickReportsTab();
         reportsHomePage.clickingNewReportsBtn();
         reportBuilderPage = reportsHomePage.selectingAllReportOption("Accounts");
-        //reportsDetailPage =
-                reportBuilderPage.buildingReportObjectID(actualAccountHeader,"Account Name","Type",4,"Customer ID","Customer Priority","Customer ID",custID,"Customer Priority","All accounts");
-        //accountDetailPage = reportsDetailPage.openingAccountDetailPageByClickingAccountLink();
-        //accountDetailPage.clickingDetailTabAfterOpeningAccountFromReport();
-        //String ActualratingFieldValue = accountDetailPage.getRatingFieldValue();
-        //System.out.println("Value of the ActualratingFieldValue====>"+ ActualratingFieldValue);
-        //Assert.assertEquals(ActualratingFieldValue,"Warm");
+        reportsDetailPage =
+                reportBuilderPage.buildingReportObjectID(actualAccountHeader,"Account Name","Type","Rating","Customer ID","Customer Priority","Customer ID",custID,"Customer Priority","All accounts");
+        accountDetailPage = reportsDetailPage.openingAccountDetailPageByClickingAccountLink();
+        accountDetailPage.clickingDetailTabAfterOpeningAccountFromReport();
+        String ActualratingFieldValue = accountDetailPage.getRatingFieldValue();
+        System.out.println("Value of the ActualratingFieldValue====>"+ ActualratingFieldValue);
+        Assert.assertEquals(ActualratingFieldValue,"Warm");
 
 
     }

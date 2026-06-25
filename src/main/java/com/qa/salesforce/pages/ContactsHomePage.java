@@ -39,6 +39,7 @@ public class ContactsHomePage {
 
     public void clicikingFileterBtn() {
         javaScriptUtil.waitForPageLoad(250);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingFilterBtn_Loc,150,10);
         javaScriptUtil.drawBorder(driver.findElement(clickingFilterBtn_Loc));
         eleUtil.doClick(clickingFilterBtn_Loc);
         javaScriptUtil.waitForPageLoad(250);
@@ -48,28 +49,25 @@ public class ContactsHomePage {
         javaScriptUtil.waitForPageLoad(250);
         //eleUtil.doClick(clickingAddFilterBtn_Loc);
         //eleUtil.doMoveToElementClick(clickingAddFilterBtn_Loc);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingAddFilterBtn_Loc,150,10);
         javaScriptUtil.clickElementByJS(clickingAddFilterBtn_Loc);
         javaScriptUtil.waitForPageLoad(250);
 
     }
 
     public void selectingAllContactsListView() {
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(200);
-            javaScriptUtil.selectingDrpDownValuesDynamically(clickingListViewBtn_Loc, "//span[text()='All Contacts']");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(200);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingListViewBtn_Loc,150,10);
+        javaScriptUtil.selectingDrpDownValuesDynamically(clickingListViewBtn_Loc, "//span[text()='All Contacts']");
     }
 
     public void passingFiltersDynamically(String fieldFilterValue, String valueFilterValue) {
 
         try {
-            Thread.sleep(15000);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingFieldFilterBtn_loc,150,10);
             javaScriptUtil.selectingDrpDownValuesDynamically(clickingFieldFilterBtn_loc, "//span[text()='" + fieldFilterValue + "']");
             eleUtil.doSendKeys(valueField_Loc, valueFilterValue);
-            Thread.sleep(10000);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingSaveBtnOnFilterProvidedPage_Loc,100,10);
             javaScriptUtil.drawBorder(driver.findElement(clickingSaveBtnOnFilterProvidedPage_Loc));
             eleUtil.doMoveToElementClick(clickingSaveBtnOnFilterProvidedPage_Loc);
             Thread.sleep(5000);
@@ -81,7 +79,9 @@ public class ContactsHomePage {
 
     public void clickingClearFilterCondition() {
         javaScriptUtil.waitForPageLoad(40);
+        eleUtil.waitForElementVisibleWithFluentWait(clearingFilterCondition_Loc,150,10);
         eleUtil.doClick(clearingFilterCondition_Loc);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingSaveBtnOnMainFIltetPage_Loc,150,10);
         eleUtil.doClick(clickingSaveBtnOnMainFIltetPage_Loc);
 
     }
@@ -96,6 +96,7 @@ public class ContactsHomePage {
             setClickingAddFilterBtn();
             passingFiltersDynamically(fieldFilterValue,valueFilterValue);
             javaScriptUtil.waitForPageLoad(250);
+            eleUtil.waitForElementVisibleWithFluentWait(clickingSaveBtnOnMainFIltetPage_Loc,150,10);
             eleUtil.doClick(clickingSaveBtnOnMainFIltetPage_Loc);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -104,29 +105,19 @@ public class ContactsHomePage {
     }
 
     public Contacts doClickingNewBtn() {
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            eleUtil.doClick(clickingNewTabBtn_Loc);
-            javaScriptUtil.waitForPageLoad(150);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(clickingNewTabBtn_Loc,150,10);
+        eleUtil.doClick(clickingNewTabBtn_Loc);
+        javaScriptUtil.waitForPageLoad(150);
 
         return new Contacts(driver);
     }
 
     public ContactDetailPage clickingContactLinkFromContactHomePage() {
-        try {
-            Thread.sleep(15000);
-            //javaScriptUtil.waitForPageLoad(200);
-            Thread.sleep(10000);
-            javaScriptUtil.drawBorder(driver.findElement(clickingContactLink_Loc));
-            eleUtil.doMoveToElementClick(clickingContactLink_Loc);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        eleUtil.waitForElementVisibleWithFluentWait(clickingContactLink_Loc,150,10);
+        javaScriptUtil.drawBorder(driver.findElement(clickingContactLink_Loc));
+        eleUtil.doMoveToElementClick(clickingContactLink_Loc);
+        javaScriptUtil.waitForPageLoad(200);
 
         return new ContactDetailPage(driver);
 
@@ -134,15 +125,11 @@ public class ContactsHomePage {
 
     public ContactDetailPage clickingContactDetailPageThroughListView() {
         By contactLink = By.xpath("//div[contains(@class,'slds-table_header-fixed_container')]//table[contains(@class,slds-table_header-fixed)]//tbody//th[@data-label='Name']//div[@class='slds-grid']/a");
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(15000);
-            javaScriptUtil.drawBorder(driver.findElement(contactLink));
-            javaScriptUtil.clickElementByJS(contactLink);
-            javaScriptUtil.waitForPageLoad(200);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        javaScriptUtil.waitForPageLoad(15000);
+        eleUtil.waitForElementVisibleWithFluentWait(contactLink,150,10);
+        javaScriptUtil.drawBorder(driver.findElement(contactLink));
+        javaScriptUtil.clickElementByJS(contactLink);
+        javaScriptUtil.waitForPageLoad(200);
 
         return new ContactDetailPage(driver);
 
@@ -150,18 +137,11 @@ public class ContactsHomePage {
 
     public String getContactHeader() {
         String objectHeader = null;
-        try {
-            Thread.sleep(15000);
-            javaScriptUtil.waitForPageLoad(150);
-            javaScriptUtil.drawBorder(driver.findElement(contactHeader_Loc));
-            objectHeader = eleUtil.doGetElementText(contactHeader_Loc);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        javaScriptUtil.waitForPageLoad(150);
+        eleUtil.waitForElementVisibleWithFluentWait(contactHeader_Loc,150,10);
+        javaScriptUtil.drawBorder(driver.findElement(contactHeader_Loc));
+        objectHeader = eleUtil.doGetElementText(contactHeader_Loc);
         return objectHeader.toString();
-
-
     }
 
     public void clearningFilterConditionAfterCapturingTheData() {
@@ -190,10 +170,10 @@ public class ContactsHomePage {
             selectingAllContactsListView();
             Thread.sleep(10000);
             clicikingFileterBtn();
-            Thread.sleep(10000);
+            eleUtil.waitForElementVisibleWithFluentWait(checkingFilterCondition_Loc,200,10);
             String filterCondition = eleUtil.doGetElementText(checkingFilterCondition_Loc);
             System.out.println("Values of the filterCondition====>"+filterCondition);
-            if(filterCondition.contains("Matching all of these filters")){
+            if(!filterCondition.equals("Matching all of these filters")){
                 Thread.sleep(10000);
                 clickingClearFilterCondition();
                 javaScriptUtil.waitForPageLoad(150);

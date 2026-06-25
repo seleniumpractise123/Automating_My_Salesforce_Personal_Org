@@ -4,6 +4,7 @@ import com.qa.salesforce.utils.ElementUtil;
 import com.qa.salesforce.utils.JavaScriptUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class ReportsDetailPage {
@@ -22,7 +23,8 @@ public class ReportsDetailPage {
     }
 
     private By clickingRecordDetailPage = By.xpath("//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='gridcell']//a");
-    private By clickingAccountDetailPage = By.xpath("(//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='gridcell'])[2]//div[contains(@aria-label,'Account Name:')]//a");
+    private By clickingAccountDetailPage = By.xpath("(//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]/tbody/tr[contains(@class,'data-grid-table-row-start')])[2]//div[contains(@aria-label,'Account Name:')]//a");
+    private By clickingAccountDetailPage1 = By.xpath("//div[@class='data-grid-table-ctr']/table[contains(@class,'data-grid-full-table')]//tbody//td[@role='button']//div[contains(@aria-label,'Account Name:')]//a");
 
 
     public AccountDetailPage openingAccountDetailPageByClickingAccountLink(){
@@ -34,6 +36,7 @@ public class ReportsDetailPage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
 
         return new AccountDetailPage(driver);
 
